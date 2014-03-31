@@ -9,13 +9,13 @@ sys.setdefaultencoding('utf-8')
 import datetime
 from time import time
 import json
-import bson
+#import bson
 
-import tldextract
+#import tldextract
 
 from flask import Flask, request, session, g, redirect, url_for, abort, \
     render_template, flash, jsonify, Response
-from flask.ext.assets import Environment, Bundle
+#from flask.ext.assets import Environment, Bundle
 from flask_oauth import OAuth
 from flask.ext.gzip import Gzip
 

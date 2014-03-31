@@ -4,7 +4,7 @@ import os, sys
 from flask import Flask
 from flask.ext.script import Manager, Server, Command, Option
 #import settings
-from steena import app
+from funtastik import app
 
 #app.config.from_object(settings)
 manager = Manager(app)
