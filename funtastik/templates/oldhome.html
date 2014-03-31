@@ -1,0 +1,91 @@
+<!doctype html>
+<html>
+ <head>
+  <script type="text/javascript" src="//vk.com/js/api/openapi.js"></script>
+  <meta charset="utf-8">
+  <title>Доступ к ВК</title>
+  <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet">
+  <!-- <link rel="stylesheet" href="style.css" /> --!>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+  <script src="/static/js/app.js"></script>
+ </head>
+ <body>
+
+<script src="http://vk.com/js/api/openapi.js" type="text/javascript"></script>
+
+<div id="login_button" onclick="VK.Auth.login(authInfo);"></div>
+
+<script language="javascript">
+VK.init({
+  apiId: 3813410
+});
+function authInfo(response) {
+  if (response.session) {
+    //alert('user: '+response.session.mid);
+    VK.Api.call('users.get',  {fields: ['uid', 'first_name', 'last_name'], order: 'name', uids: response.session.mid}, function(r){
+       if(r.response){
+        r = r.response;
+        $('#username').html('<a href="/' + response.session.mid + '">' + (r[0].first_name + ' ' + r[0].last_name) + '</a>');
+      }
+    });
+
+    yourid = response.session.mid; 
+    VK.Api.call('users.get',  {fields: ['uid', 'first_name', 'last_name'], order: 'name', uids: '{{ userid }}'}, function(r){
+       if(r.response){
+        r = r.response;
+        $('#whichwall').text((r[0].first_name + ' ' + r[0].last_name));
+      }
+    });
+
+  } else {
+    alert('not auth');
+  }
+}
+VK.Auth.getLoginStatus(authInfo);
+VK.UI.button('login_button');
+</script>
+
+<table name="">
+    <tr>
+        <td>Welcome, <span id="username"></span>!</td><td></td>
+    <tr>
+        <td>Стена пользователя <b><span id="whichwall"><b>Anonymous</b></span></b></td><td>Ваши друзья</td>
+    <tr>
+    <tr>
+        <td><span id="wall">
+            <form method="POST" action="/post" enctype="multipart/form-data">
+            <input type="checkbox" class="anonymous" value="anonimous">Post as anonymous</checked>
+            <input type="file" name="image" size="200"><br>
+            <input type="hidden" id="sender" name="from" size="200">
+            <input type="hidden" id="recipient" name="to" size="200" value="{{ userid }}">
+            <input type="submit" value="Submit">
+            </form>
+            </span></td><td></td>
+    <tr>
+    <tr>
+        <td><span id="wall" align="top">
+        {% for pic in posts%}
+            <div id="{{ pic['cloudinary']['public_id'] }}">
+                <span class="sender" id="{{ pic['sender'] }}"></span>
+                <span class="recipient" id="{{ pic['recipient'] }}"></span>
+                <img src="{{ pic['cloudinary']['url'] }}"></img>
+                <span class="recipient" id="{{ pic['recipient'] }}"></span>
+                <span class="likes">
+                   <input type="button" class="like" value="Вау!"/>
+                   <input type="button" class="like" value="Смешно"/>
+                   <input type="button" class="like" value="Что?!"/>
+                   <input type="button" class="like" value="Скука"/>
+                   <input type="button" class="like" value="Фуу"/>
+                </span>
+            </div>
+        {%- endfor %}
+        </span></td><td><span id="friends">У вас нет друзей.</span></td>
+    <tr>
+
+</table>
+
+
+
+ </body>
+</html>
+

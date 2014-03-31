@@ -1,0 +1,71 @@
+{% macro comment(c) -%}
+<div class="commnets-list-title">{{ c.username }}, <abbr class="timeago" title="{{ c.ctime | datetimeformat }}">Dec 18, 1978</abbr></div>
+    {{ c.body }}
+    <div class="commnets-list-icons">
+        <input type="hidden" name="comment_id" value="{{ c.id }}">
+        <span class="iic">
+            <a title="" class="topic-cmnt-count" href="#"><span class="ic"></span> <span>ответить на комментарий</span></a>
+            </span>    
+            <a title="" class="topic-rating" href="#"><span class="ic"></span>
+                <span class="comment-upvote-count">{{ c.up | comment_score }}</span>
+            </a>
+            <!-- <a title="" class="topic-like" href="#"></a> }} --!>
+    </div>
+{%- endmacro %}
+
+{% macro print_tag(tag) %}
+    <a href="/tags/{{ tag }}">{{ tag }}</a>
+{%- endmacro %}
+
+{% macro print_tags(tags) %}
+    {% if tags | count > 0 %}
+        {% if tags | count < 6 %}
+            В сюжете: 
+            {% for tag in tags[0:-1] %}
+                {{ print_tag(tag) }},
+            {% endfor %}
+            {{ print_tag(tags[-1]) }}
+        {% else %}
+            В сюжете: 
+            {% for tag in tags[0:5] %}
+                 {{ print_tag(tag) }},
+            {% endfor %}
+            {{ print_tag(tags[-1]) }}
+        {% endif %}
+    {% else %}
+    {% endif %}
+{%- endmacro %} 
+
+{% macro display_story(story) %}
+    <article data-news-id="{{ story.id }}">
+    <h2><a href="{{ story.url }}" target="_blank">{{ story.title }}</a></h2>
+
+        <div class="news-info-topic">
+            <div class="news-info-text">
+                {{ story.username }}, <abbr class="timeago" title="{{ story.ctime | datetimeformat }}">Dec 18,
+                1978</abbr> — {{ story.url | topleveldomain}}
+            </div>
+            <div class="news-icons-topic">
+                <a class="preview" title="" class="" href="#" style="display:none;">preview</a>
+                {#    <a title="" class="topic-cmnt" href="#"></a>  #}
+                {% if (g.user and g.user.has_key('isadmin')) or (g.user['username'] == story.username) %}
+                <a class="delnews" title="" class="" href="#" style="color:red;">delete</a>
+                {% endif %}    
+                <a title="" class="topic-rating uparrow {% if story.voted %}voted{% endif %}" href="#"><span title="Голосовать" class="ic"></span>
+                    <span class="upvote-count">{{ story.up }}</span>
+                </a>
+                <a title="" class="topic-cmnt-count" href="/news/{{ story.id }}">
+                    <span class="ic" title="Комментарии"></span> {{ story.comments }}
+                </a>
+                {% if (g.user and g.user.has_key('preview')) %} 
+                    {% set display = g.user['preview'] %} 
+                {% else %}
+                    {% set display = 'inline' %}
+                {% endif %}
+                <a title="Сохранить" class="topic-like {% if story.saved %}voted{% endif %}"" href="#" data-news-id="{{ story.id }}"></a>
+            </div>{% if story.has_key('description') %}<blockquote style="display:{{display}};">{{ story.description }}</blockquote>{% endif %}
+
+            {{ print_tags(story['tags']) }}
+        </div>
+    </article>
+{%- endmacro %}

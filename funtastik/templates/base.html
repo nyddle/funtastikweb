@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>{% block title %}iTimes - Главные новости Рунета{% endblock %}</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="robots" content="index, follow">
+    <meta content="index" name="robots">
+    <!--
+    {% assets "js_libs" %}
+        <script type="text/javascript" src="{{ ASSET_URL }}"></script>
+    {% endassets %}
+    --!>
+    {% assets "css_main" %}
+        <link rel="stylesheet" href="{{ ASSET_URL }}" type="text/css" />
+    {% endassets %}
+
+    <!-- Favicon -->
+    <link rel="Shortcut Icon" type="image/x-icon" href="">
+    <link href="/static/images/favicon-2.ico" rel="shortcut icon">
+    <link href="{{ url_for('atom_feed') }}" rel="alternate" title="Tech news from Russia" type="application/atom+xml">
+
+    <link rel="image_src" href="http://www.itimes.ru/static/images/cup.png" />
+    <meta property="og:image" content="http://www.itimes.ru/static/images/cup.png" />
+
+    <script type="text/javascript" src="/static/js/libs/jquery-1.6.2.min.js"></script>
+    <script type="text/javascript" src="/static/js/libs/jquery.leanModal.min.js"></script>
+    <script type="text/javascript" src="/static/js/libs/jquery.masonry.min.js"></script>
+    <script type="text/javascript" src="/static/js//libs/jquery.infinitescroll.min.js"></script>
+    <script type="text/javascript" src="/static/js/libs/jquery.timeago.js"></script>
+    <script type="text/javascript" src="/static/js/libs/test_helpers.js"></script>
+    <script type="text/javascript" src="/static/js/libs/humane.min.js"></script>
+
+    <script type="text/javascript" src="/static/js/libs/happy.js"></script>
+    <script type="text/javascript" src="/static/js/libs/happy.methods.js"></script>
+
+    {% assets "js_main" %}
+        <script type="text/javascript" src="{{ ASSET_URL }}"></script>
+    {% endassets %}
+    <script type="text/javascript">(function() { 
+          if (window.pluso)if (typeof window.pluso.start == "function") return; 
+          var d = document, s = d.createElement('script'), g = 'getElementsByTagName'; 
+          s.type = 'text/javascript'; s.charset='UTF-8'; s.async = true; 
+          s.src = ('https:' == window.location.protocol ? 'https' : 'http')  + '://share.pluso.ru/pluso-like.js'; 
+          var h=d[g]('head')[0] || d[g]('body')[0]; 
+          h.appendChild(s); 
+          })();</script> 
+</head>
+<body>
+
+<div class="global">
+
+    {# ~~~~~~~~~~~~~~~~~~~~~~~~~ Header ~~~~~~~~~~~~~~~~~~~~~~~~~ #}
+    <div class="header">
+        <div class="header-inside">
+            {# ~~~~~~~~~~~~~~~~~~~~~~~~~ Header/Logo ~~~~~~~~~~~~~~~~~~~~~~~~~  #}
+            <a title="новости про рунет" class="logo" href="/#"></a>
+            {# ~~~~~~~~~~~~~~~~~~~~~~~~~ Header/Menu ~~~~~~~~~~~~~~~~~~~~~~~~~ #}
+            <a href="#" title="Развернуть меню" class="drop-header-menu"></a>
+
+            <div class="menu_main">
+                <ul>
+                    <li><a name="top" title="Популярные" href="/top/">Популярные</a></li>
+                    <li><a name="new" title="Новые" href="/">Новые</a></li>
+                    {% if g.user %}
+                        <li><a name="posted" title="Мои" href="/posted/">Мои</a></li>
+                        <li><a name="saved" title="Сохраненные" href="/saved/">Сохраненные</a></li>
+                        {# <li><a name="threads" title="Треды" href="/threads/">Треды</a></li> #}
+                    {% endif %}
+                    {# <li><a title="Спросить" href="#">Спросить</a></li> #}
+                    <li><a class="login-form" title="+ Добавь новость!" href="#" id="add">+ <span>Добавь новость!</span></a></li>
+                    <li><a href={{ url_for('atom_feed') }}>RSS</a></li>
+
+                </ul>
+            </div>
+
+            {#~~~~~~~~~~~~~~~~~~~~~~~~~ Header/Login ~~~~~~~~~~~~~~~~~~~~~~~~~#}
+            {% if g.user %}
+            <a title="dsvdvs" class="a-user" href="/user/{{ g.user.username }}">{{ g.user.username }}</a>
+                <a title="Выйти" class="a-login" href="/logout">Выйти</a>
+                <input type="hidden" id="logged" value="in"/>
+            {% else %}
+            <span class="a-enter">Войти через <a title="fb" id="enterfb" href="/login/facebook" class="a-fb">Facebook</a>
+             , <a title="vk" id="entervk" class="a-vk" href="/login/vkontakte">Вконтакте</a>
+            или <a title="tw" id="entertw" class="a-tw" href="/login/twitter">Twitter</a></span>
+                <input type="hidden" id="logged" value="out"/>
+                {# -- <a href="/login">login / register</a> --#}
+            {% endif %}
+
+        </div>
+    </div>
+    <div class="right-col-fixed">
+        {# ~~~~~~~~~~~~~~~~~~~~~~~~~ Right col ~~~~~~~~~~~~~~~~~~~~~~~~~ #}
+        <div class="right-col">
+            <br>
+            <h1>ПОДЕЛИТЬСЯ НОВОСТЬЮ</h1>
+
+            {# ~~~~~~~~~~~~~~~~~~~~~~~~~ Right col/Add form ~~~~~~~~~~~~~~~~~~~~~~~~~  #}
+            <form id="addform" class="add-form" action="/" method="post">
+                <input value="-1" type="hidden" name="news_id">
+                {% if not g.user %}
+                    <div class="disabled-form"></div> {% endif %}
+                <span>Ссылка</span>
+                <input name="url" id="url" type="text" maxlength="300"/>
+
+                <div class="count-word">140</div>
+                <span>Заголовок</span>
+                <textarea name="text" id="text" rows="0" cols="0" maxlength="140"></textarea>
+                {% if g.user and g.user.has_key('provider') and (g.user['provider'] == 'facebook') %}
+                <input type="checkbox" title="Facebook share" id="postfb" name="postfb" value="share" checked/> share via Facebook</br><br>
+                {% endif %}
+                <input name="do_submit" type="submit" title="ОТПРАВИТЬ" value="ОТПРАВИТЬ"/>
+            </form>
+            <div id="errormsg"></div>
+            <script>
+              (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+              (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+              m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+              })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+              ga('create', 'UA-42244727-1', 'itimes.ru');
+              ga('send', 'pageview');
+
+            </script>
+            </script>
+        </div>
+    </div>
+
+
+    {% block body %}
+    {% endblock %}
+
+    {% if g.user %}
+        <script>var apisecret = '{{ g.user['apisecret']  }}';</script>
+        <script>setKeyboardNavigation();</script>
+    {% endif %}
+</div>
+<!--LiveInternet counter--><script type="text/javascript"><!-- 
+document.write("<a href='http://www.liveinternet.ru/click' "+ 
+"target=_blank><img src='//counter.yadro.ru/hit?t14.6;r"+ 
+escape(document.referrer)+((typeof(screen)=="undefined")?"": 
+";s"+screen.width+"*"+screen.height+"*"+(screen.colorDepth? 
+screen.colorDepth:screen.pixelDepth))+";u"+escape(document.URL)+ 
+";"+Math.random()+ 
+"' alt='' title='LiveInternet: показано число просмотров за 24"+ 
+" часа, посетителей за 24 часа и за сегодня' "+ 
+"border='0' width='88' height='31'><\/a>") 
+//--></script><!--/LiveInternet-->
+
+</body>
+</html>
+

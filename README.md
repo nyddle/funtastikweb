@@ -1,4 +1,5 @@
-funtastikweb
-============
+FUNTASTIK
+=========
 
-funtastik for web
+Awesome demotivators for everyone!!!11
+
