@@ -17,7 +17,7 @@ argparse==1.2.1
 autoenv==1.0.0
 blinker==1.2
 blitz==0.3.3
-cloudinary==1.0.10
+cloudinary
 cssmin==0.1.4
 flask-lesscss==0.9.1
 gunicorn==0.17.4
