@@ -32,7 +32,7 @@ import redis
 
 from cloudinary import uploader #pip install git+https://github.com/cloudinary/pycloudinary/
 
-r = redis.StrictRedis.from_url(os.getenv('REDISTOGO_UR', 'redis://127.0.0.1:6379'))
+r = redis.StrictRedis.from_url(os.getenv('REDISTOGO_URL', 'redis://127.0.0.1:6379'))
 if (not r):
     sys.exit(1)
 
@@ -43,7 +43,7 @@ from RedisSessionStore import *
 
 app = MyFlask(__name__, static_folder='static', static_url_path='')
 # session params
-app.config['SESSION_REDIS_HOST'] = os.getenv('REDISTOGO_UR', 'redis://127.0.0.1:6379')
+app.config['SESSION_REDIS_HOST'] = os.getenv('REDISTOGO_URL', 'redis://127.0.0.1:6379')
 app.config['SESSION_REDIS_DB'] = 1
 
 app.config['SESSION_KEY'] = '3425234535'
