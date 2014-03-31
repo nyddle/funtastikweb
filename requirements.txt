@@ -26,7 +26,6 @@ itsdangerous==0.21
 mailgun==0.1.1
 oauth2==1.5.211
 oauthlib==0.4.2
-poster==0.8.2
 pyactiveresource==1.0.1
 python-dateutil==2.1
 python-openid==2.2.5
