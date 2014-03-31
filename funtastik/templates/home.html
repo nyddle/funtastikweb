@@ -28,7 +28,7 @@
 
 <script language="javascript">
 VK.init({
-  apiId: 3829270
+  apiId: 4274771
 });
 function authInfo(response) {
   if (response.session) {
@@ -61,87 +61,6 @@ VK.Auth.getLoginStatus(authInfo);
 VK.UI.button('login_button');
 </script>
 
-    <aside class="navigation-block">
-        <nav>
-            <ul>
-                <li class="{% if selected == 'logo' %}menu--selected{% endif %}">
-                    <a data-filter="*" href="#">Лого</a>
-                </li>
-                <li class="{% if selected == 'last' %}menu--selected{% endif %}">
-                    <a data-filter="*" href="/">Последнее</a>
-                </li>               
-                <li class="{% if selected == 'friends' %}menu--selected{% endif %}">
-                    <a data-filter="*" class="friendslink" href="">Друзья</a>
-                </li>   
-                <li class="{% if selected == 'my' %}menu--selected{% endif %}">
-                    <a data-filter="*" href="#" class="mylink">Моя</a>
-                </li>   
-                <!--
-                <li>
-                    <a data-filter="*" href="#">Ответы</a>
-                </li>                 
-                --!>
-            </ul>
-        </nav>
-    </aside>
-    <div id="steena">
-        <div class="clearfix"></div>
-        {% for pic in posts%}
-            <!-- POST --!>
-            <div class="post" id="{{ pic['cloudinary']['public_id'] }}" data-sender="{{ pic['sender'] }}" data-receiver="{{ pic['receiver'] }}">
-                <div class="post__people">
-                    {% if 'anonymous' not in pic %}
-                    <a href="post__people--author">Дмитрий Медведев</a>
-                    {% endif %}
-                </div>
-                <div class="post__image">
-                    <img src="{{ pic['cloudinary']['url'] }}" alt="" />
-                </div>
-                <div class="post__social" data-id="{{ pic['cloudinary']['public_id'] }}">
-                    <!-- <a href="" class="reply">Ответить</a> --!>
-                    <!-- <a href="" class="share">Поделиться</a> --!>
-                    <a href="" class="like">
-                     <!--Лайк--!>
-                        <span class="like__types">
-                        <a href="javascript:void(0);" class="like--cool">Cool ({{ pic['like--cool'] or '0' }})</a>
-                        <a href="javascript:void(0);" class="like--fun">Fun ({{ pic['like--fun'] or '0' }})</a>
-                        <a href="javascript:void(0);" class="like--whats">Wat? ({{ pic['like--whats'] or '0' }})</a>
-                        <a href="javascript:void(0);" class="like--boring">Psst ({{ pic['like--boring'] or '0' }})</a>
-                        <a href="javascript:void(0);" class="like--fu">Fuuu ({{ pic['like--fu'] or '0' }})</a>
-                        </span>
-                    </a>
-                    <a href="/thread/{{ pic['cloudinary']['public_id'] }}" class="comments">Ответы ({{ pic['replies'] or 0 }})</a>
-                </div>
-            </div>
-            
-        {% endfor %}
-        <!-- HH --!>
-    </div>
-    <div id="community">
-        <div id="user">
-            <div class="user__avatar">
-                <img src="" alt="" width="100" />
-            </div>
-            <div class="user__info">
-                <h2>Anonimous</h2>
-            </div>
-            <a href="" class="create-post">Добавить пост</a>
-            <!-- <input type="checkbox">Анонимно --!>
-            <form method="POST" action="/post" enctype="multipart/form-data">
-                <input type="checkbox" class="anonymous" name="anonymous" value="anonymous">Post as anonymous</input>
-                <input type="file" name="image" size="200"><br>
-                <input type="hidden" id="sender" name="from" size="200">
-                <input type="hidden" id="recipient" name="to" size="200" value="{{ userid }}">
-                {% if reply_to %}
-                <input type="hidden" id="reply" name="reply" size="200" value="{{ reply_to }}">
-                {% endif %}
-                <input type="submit" value="Submit">
-            </form>
-
-        </div>
-        <div id="friends">
-        </div>
-    </div>
 </body>
 </html>
 
