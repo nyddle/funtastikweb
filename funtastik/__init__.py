@@ -18,6 +18,7 @@ from flask import Flask, request, session, g, redirect, url_for, abort, \
 #from flask.ext.assets import Environment, Bundle
 from flask_oauth import OAuth
 from flask.ext.gzip import Gzip
+from flaskext.mysql import MySQL
 
 from werkzeug.security import generate_password_hash, \
     check_password_hash
@@ -80,15 +81,24 @@ app.config['DEBUG'] = True
 def like():
 
     if request.method == "POST":
-        public_id = request.form['public_id']
-        like_type = request.form['like_type']
+        #public_id = request.form['public_id']
+        #like_type = request.form['like_type']
 
         #hincrby likes:post2 otstoy 1
-        r.hincrby('likes:'+public_id, like_type, 1)
         return jsonify({'status': "ok" })
 
     else:
         return jsonify({'status': "err", 'error': 'Rwong method!'})
+
+@app.route('/api/next', methods=['GET'])
+def next():
+
+    if request.method == "POST":
+        return jsonify({'status': "err", 'error': 'Rwong method!'})
+
+    else:
+        return jsonify({'status': "ok" })
+
 
 
 

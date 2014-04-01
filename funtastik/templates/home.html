@@ -61,13 +61,25 @@ function authInfo(response) {
 VK.Auth.getLoginStatus(authInfo);
 VK.UI.button('login_button');
 </script>
+
 <br>
 <br>
 <div id="main" align="center">
-like | share | << | >> | new | magic
+
+<div id="menu" align = right>
+<a href="#">new</a> |
+<a href="#">magic</a> |
+<a href="#">favourites</a> 
+</div>
+<br><br>
+
+<a href="#"><<</a> |
+<a id="like" href="#">like</a> |
+<a href="#">share</a> |
+<a id="next" href="#">>></a>
 <br>
 <br>
-<img src="http://cs7009.vk.me/c540100/v540100653/c500/2TL9XHB1f0U.jpg" />
+<img id="demotivator" data-id="0" src="http://cs7009.vk.me/c540100/v540100653/c500/2TL9XHB1f0U.jpg" />
 <br> 
 </div>
 </body>
