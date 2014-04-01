@@ -11,7 +11,6 @@ from time import time
 import json
 #import bson
 
-#import tldextract
 
 from flask import Flask, request, session, g, redirect, url_for, abort, \
     render_template, flash, jsonify, Response
@@ -73,7 +72,6 @@ app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
 app.config.update(SECRET_KEY=os.urandom(20))
 if app.debug:
     from flaskext.lesscss import lesscss
-
     lesscss(app)
 app.static_path = '/static'
 
@@ -129,27 +127,9 @@ def favorites():
 
 
 
-@app.route('/', defaults={'userid' : 'all'})
-@app.route('/<userid>')
-def index(userid):
-
-    a = []
-    if userid == 'all':
-        a = r.zrevrange('allpics', 0, -1)
-    else:
-        a = r.zrevrange('wall:'+userid, 0, -1)
-
-    posts = []
-    if not a:
-        a = []
-    for public_id in a:
-        post = load_post(public_id)
-        posts.append(post)
-    #print posts
-    selected = False
-    if (userid == 'all'):
-        selected = 'last'
-    return render_template('home.html', userid=userid, posts=posts, selected=selected)
+@app.route('/')
+def index():
+    return render_template('home.html')
 
 """
 {u'secure_url': u'https://res.cloudinary.com/ummwut/image/upload/v1376132166/1001.gif', u'public_id': u'1001', u'format': u'gif', u'url': u'http://res.cloudinary.com/ummwut/image/upload/v1376132166/1001.gif', u'created_at': u'2013-08-10T10:56:06Z', u'bytes': 614274, u'height': 302, u'width': 288, u'version': 1376132166, u'signature': u'573f5b4a5947a0f185371f559c7d96cb3071ee36', u'type': u'upload', u'pages': 40, u'resource_type': u'image'}
