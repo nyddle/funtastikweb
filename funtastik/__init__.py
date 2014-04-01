@@ -33,6 +33,10 @@ import redis
 
 from cloudinary import uploader #pip install git+https://github.com/cloudinary/pycloudinary/
 
+
+from flaskext.mysql import MySQL
+from flask.ext.pymongo import PyMongo
+
 r = redis.StrictRedis.from_url(os.getenv('REDISTOGO_URL', 'redis://127.0.0.1:6379'))
 if (not r):
     sys.exit(1)
@@ -52,7 +56,15 @@ app.config['SESSION_KEY_PREFIX'] = 'session_myapp_'
 
 app.config['SESSION_LIFETIME'] = 86400 * 20
 
+
 RedisSessionStore.init_app(app)
+#mysql = MySQL()
+#mysql.init_app(app)
+
+mongo = PyMongo(app)
+#app.config[''] = 'mongodb://heroku:ewnQct-znVkleYYjaTA3gMrRS_RfB59ty_HvX28Y4knC-4mlUblyJph7rAF21lKTGZB5Syx9F-aD2Okl-JMiEw@oceanic.mongohq.com:10021/app23598021'
+
+
 
 app.config.from_object(__name__)
 app.config['SECRET_KEY'] = 'devkey'
@@ -81,10 +93,14 @@ app.config['DEBUG'] = True
 def like():
 
     if request.method == "POST":
-        #public_id = request.form['public_id']
-        #like_type = request.form['like_type']
+        user_id = request.form['user']
+        pic_id = request.form['picid']
 
-        #hincrby likes:post2 otstoy 1
+        registered = mongo.db.users.find({'user': user_id}).count()
+        print registered
+        if (registered == 0):
+            mongo.db.users.insert({'user': user_id})
+        mongo.db.users.update({'user': user_id}, { '$push' : { 'favorites' : pic_id } })
         return jsonify({'status': "ok" })
 
     else:
@@ -96,8 +112,19 @@ def next():
     if request.method == "POST":
         return jsonify({'status': "err", 'error': 'Rwong method!'})
 
-    else:
-        return jsonify({'status': "ok" })
+    return jsonify({"secure_url": "https://res.cloudinary.com/hmtpkyvtl/image/upload/v1396332969/h6hui6ytav2n3aahdywb.jpg", "public_id": "h6hui6ytav2n3aahdywb", "format": "jpg", "url": "http://res.cloudinary.com/hmtpkyvtl/image/upload/v1396332969/h6hui6ytav2n3aahdywb.jpg", "created_at": "2014-04-01T06:16:09Z", "bytes": 71184, "height": 500, "width": 604, "version": 1396332969, "etag": "504d6994d46ec56c48aea36b27df583b", "signature": "1494590db63f944b3259df54e4198babfe6f1cbb", "type": "upload", "resource_type": "image"})
+
+
+@app.route('/api/favorites', methods=['GET'])
+def favorites():
+
+    if request.method == "POST":
+        return jsonify({'status': "err", 'error': 'Rwong method!'})
+
+    user_id = request.form['user']
+    favorites = mongo.db.users.find({'user': user_id})
+
+    return jsonify({'status': "ok" })
 
 
 

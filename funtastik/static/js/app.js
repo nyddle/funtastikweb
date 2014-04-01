@@ -1,11 +1,13 @@
 $(document).ready(function() {
 
-var yourid = 'someuser';
-
+var userid = 'someuser';
 
 $('#like').click(function() {
     event.stopPropagation();
-    data = {};
+    data = {
+            "picid" : $('#demotivator').data('picid'),
+            "user"  : userid
+            };
     $.ajax({
         type: "POST",
         url: "/api/like",
@@ -28,8 +30,9 @@ $('#next').click(function() {
         url: "/api/next",
         data: data,
         success: function(r) {
-            if (r.status == "ok") {
-                alert('Ваш голос засчитан!');
+            if (r.url) {
+                $('#demotivator').attr('src', r.url);
+                $('#demotivator').data('picid', r.public_id);
              } else {
                 alert('not ok');
             }
