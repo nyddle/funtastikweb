@@ -30,12 +30,27 @@ $('#next').click(function() {
         url: "/api/next",
         data: data,
         success: function(r) {
-            if (r.url) {
-                $('#demotivator').attr('src', r.url);
-                $('#demotivator').data('picid', r.public_id);
+            if (r.data) {
+                $('#demotivator').attr('src', r.data[0].url);
+                $('#demotivator').data('picid', r.data[0].public_id);
              } else {
                 alert('not ok');
             }
+        }
+    });
+});
+
+$('#favorites').click(function() {
+    event.stopPropagation();
+    data = {
+            "user"  : userid
+            };
+    $.ajax({
+        type: "GET",
+        url: "/api/favorites",
+        data: data,
+        success: function(r) {
+            alert(r);
         }
     });
 });

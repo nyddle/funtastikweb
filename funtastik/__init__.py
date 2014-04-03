@@ -61,6 +61,11 @@ RedisSessionStore.init_app(app)
 #mysql.init_app(app)
 
 mongo = PyMongo(app)
+
+# connect to another MongoDB server altogether
+app.config['MONGO2_HOST'] = '95.85.22.116'
+app.config['MONGO2_PORT'] = 27017
+mongo2 = PyMongo(app, config_prefix='MONGO2')
 #app.config[''] = 'mongodb://heroku:ewnQct-znVkleYYjaTA3gMrRS_RfB59ty_HvX28Y4knC-4mlUblyJph7rAF21lKTGZB5Syx9F-aD2Okl-JMiEw@oceanic.mongohq.com:10021/app23598021'
 
 
@@ -110,7 +115,7 @@ def next():
     if request.method == "POST":
         return jsonify({'status': "err", 'error': 'Rwong method!'})
 
-    return jsonify({"secure_url": "https://res.cloudinary.com/hmtpkyvtl/image/upload/v1396332969/h6hui6ytav2n3aahdywb.jpg", "public_id": "h6hui6ytav2n3aahdywb", "format": "jpg", "url": "http://res.cloudinary.com/hmtpkyvtl/image/upload/v1396332969/h6hui6ytav2n3aahdywb.jpg", "created_at": "2014-04-01T06:16:09Z", "bytes": 71184, "height": 500, "width": 604, "version": 1396332969, "etag": "504d6994d46ec56c48aea36b27df583b", "signature": "1494590db63f944b3259df54e4198babfe6f1cbb", "type": "upload", "resource_type": "image"})
+    return jsonify({'res' : 'ok', 'data' : [ pic["cloudinary"] for pic in mongo2.db.funtastik.find({}) ]})
 
 
 @app.route('/api/favorites', methods=['GET'])
@@ -118,11 +123,9 @@ def favorites():
 
     if request.method == "POST":
         return jsonify({'status': "err", 'error': 'Rwong method!'})
-
     user_id = request.form['user']
-    favorites = mongo.db.users.find({'user': user_id})
-
-    return jsonify({'status': "ok" })
+    favorites = mongo.db.users.find_one({'user': user_id}, { 'favorites' : 1 })
+    return jsonify(favorites)
 
 
 
