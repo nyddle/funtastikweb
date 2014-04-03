@@ -6,6 +6,7 @@ import sys
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
+import random
 import datetime
 from time import time
 import json
@@ -116,7 +117,7 @@ def next():
 
     if request.method == "POST":
         return jsonify({'status': "err", 'error': 'Rwong method!'})
-    return jsonify({'res' : 'ok', 'data' : [ pic["cloudinary"] for pic in mongo2.db.image.find({}).limit(-1).skip(10) ]})
+    return jsonify({'res' : 'ok', 'data' : [ pic["cloudinary"] for pic in mongo2.db.image.find({}).limit(-1).skip(random.randint(1, 100)) ]})
 
 
 @app.route('/api/favorites', methods=['GET'])
