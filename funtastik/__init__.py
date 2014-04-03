@@ -35,6 +35,7 @@ from cloudinary import uploader #pip install git+https://github.com/cloudinary/p
 
 from flaskext.mysql import MySQL
 from flask.ext.pymongo import PyMongo
+from pymongo import MongoClient
 
 r = redis.StrictRedis.from_url(os.getenv('REDISTOGO_URL', 'redis://127.0.0.1:6379'))
 if (not r):
@@ -60,7 +61,8 @@ RedisSessionStore.init_app(app)
 #mysql = MySQL()
 #mysql.init_app(app)
 
-mongo = PyMongo(app)
+#mongo = PyMongo(app)
+mongo = MongoClient(os.getenv('MONGOHQ_URL', '127.0.0.1'))
 
 # connect to another MongoDB server altogether
 app.config['MONGO2_HOST'] = '95.85.22.116'
