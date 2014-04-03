@@ -116,7 +116,7 @@ def next():
 
     if request.method == "POST":
         return jsonify({'status': "err", 'error': 'Rwong method!'})
-    return jsonify({'res' : 'ok', 'data' : [ pic["cloudinary"] for pic in mongo2.db.funtastik.find({}).limit(-1).skip(10) ]})
+    return jsonify({'res' : 'ok', 'data' : [ pic["cloudinary"] for pic in mongo2.db.image.find({}).limit(-1).skip(10) ]})
 
 
 @app.route('/api/favorites', methods=['GET'])
