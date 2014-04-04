@@ -169,7 +169,7 @@ def index():
 def login(strategy):
     print request
     return strategies[strategy].authorize(callback=url_for(strategy+'_authorized', strategy=strategy,
-        next=request.args.get('next') or request.referrer or None,redirect_uri='http://www.funtastik.herokuapp.com',
+        next=request.args.get('next') or request.referrer or None,redirect_uri='http://funtastik.herokuapp.com',
         _external=True))
 
 vkontakte = strategies['vkontakte']
