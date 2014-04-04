@@ -211,7 +211,7 @@ def vkontakte_authorized(resp):
     user.oauth_token = resp['oauth_token']
     user.oauth_secret = resp['oauth_token_secret']
     """
-    update_access_token(user_id, resp['access_token'])
+    #update_access_token(user_id, resp['access_token'])
     session['user_id'] = user_id
     session['username'] = response['first_name'] + ' ' + response['last_name']
     flash('You were signed in')
