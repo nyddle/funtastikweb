@@ -1,6 +1,6 @@
 $(document).ready(function() {
 
-var userid = 'someuser';
+var userid = $('#hlogin').data('userid') || 'anonymous';
 
 $('#like').click(function() {
     event.stopPropagation();

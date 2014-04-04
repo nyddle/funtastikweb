@@ -63,9 +63,9 @@ VK.UI.button('login_button');
 
 
 {% if session.username %}
-    <a id={{ session['user_id'] }}href="/login/vkontakte">{{ session['username'] }}</a>
+    <a id="hlogin" data-userid={{ session['user_id'] }} href="/login/vkontakte">{{ session['username'] }}</a>
 {% else %}
-    <a href="/login/vkontakte">login via vk</a>
+    <a id="hlogin" href="/login/vkontakte">login via vk</a>
 {% endif %}
 
 
