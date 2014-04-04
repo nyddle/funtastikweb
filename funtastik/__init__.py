@@ -169,7 +169,7 @@ def index():
 def login(strategy):
     print request
     return strategies[strategy].authorize(callback=url_for(strategy+'_authorized', strategy=strategy,
-        next=request.args.get('next') or request.referrer or None,redirect_uri='http://www.sfuntastik.herokuapp.com',
+        next=request.args.get('next') or request.referrer or None,redirect_uri='http://www.funtastik.herokuapp.com',
         _external=True))
 
 vkontakte = strategies['vkontakte']
@@ -214,4 +214,17 @@ def vkontakte_authorized(resp):
     session['user_id'] = user_id
     flash('You were signed in')
     return redirect(next_url)
+
+
+@vkontakte.tokengetter
+def get_vkontakte_oauth_token():
+    return session.get('oauth_token')
+
+
+@app.route('/logout')
+def logout():
+    session.pop('user_id', None)
+    session.pop('oauth_token', None)
+    flash('You were signed out')
+    return redirect(request.referrer or url_for('index'))
 
