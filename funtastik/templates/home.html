@@ -23,7 +23,7 @@
 <body>
 <script src="http://vk.com/js/api/openapi.js" type="text/javascript"></script>
 
-<div id="login_button" onclick="VK.Auth.login(authInfo);"></div>
+<!-- <div id="login_button" onclick="VK.Auth.login(authInfo);"></div> --!>
 
 <script language="javascript">
 VK.init({
@@ -43,7 +43,7 @@ function authInfo(response) {
     });
 
     yourid = response.session.mid; 
-    alert(yourid);
+    //alert(yourid);
     /*
     VK.Api.call('users.get',  {fields: ['uid', 'first_name', 'last_name'], order: 'name', uids: '{{ userid }}'}, function(r){
        if(r.response){
@@ -63,7 +63,7 @@ VK.UI.button('login_button');
 
 
 {% if session.username %}
-    <a href="/login/vkontakte">{{ session['username'] }}</a>
+    <a id={{ session['user_id'] }}href="/login/vkontakte">{{ session['username'] }}</a>
 {% else %}
     <a href="/login/vkontakte">login via vk</a>
 {% endif %}
