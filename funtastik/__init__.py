@@ -79,8 +79,8 @@ mongo2 = PyMongo(app, config_prefix='MONGO2')
 
 # Oauth stuff
 
-VKONTAKTE_APP_ID = os.getenv('VKONTAKTE_APP_ID', '3706801') #'3698600'
-VKONTAKTE_APP_SECRET = os.getenv('VKONTAKTE_APP_SECRET', '5AP5clufqwBPqZ8yE9YJ') #'TrZKHQ860aoa5bEVk3Ja'
+VKONTAKTE_APP_ID = os.getenv('VKONTAKTE_APP_ID', '4274771') #'3698600'
+VKONTAKTE_APP_SECRET = os.getenv('VKONTAKTE_APP_SECRET', 'EV9LaqJCOpmDaA6afbgz') #'TrZKHQ860aoa5bEVk3Ja'
 
 oauth = OAuth()
 
@@ -192,6 +192,7 @@ def vkontakte_authorized(resp):
     response = me.data['response'][0]
     print me.data
     username = response['first_name'] + ' ' + response['last_name']
+    """
     print '* user ' + username + ' tries to log in'
     user_id = 'vk'+str(user_id)
     user = get_user_by_id(user_id)   #User.query.filter_by(name=resp['screen_name']).first()
@@ -202,7 +203,7 @@ def vkontakte_authorized(resp):
         print 'Creating new user!!'
         usr = create_social_user(user_id, username, resp['access_token'])
         print usr
-
+    """
     """
     # in any case we update the authenciation token in the db
     # In case the user temporarily revoked access we will have
@@ -212,6 +213,7 @@ def vkontakte_authorized(resp):
     """
     update_access_token(user_id, resp['access_token'])
     session['user_id'] = user_id
+    session['username'] = response['first_name'] + ' ' + response['last_name']
     flash('You were signed in')
     return redirect(next_url)
 
