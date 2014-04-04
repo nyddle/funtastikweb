@@ -64,6 +64,7 @@ VK.UI.button('login_button');
 
 {% if session.username %}
     <a id="hlogin" data-userid={{ session['user_id'] }} href="/login/vkontakte">{{ session['username'] }}</a>
+    <a href="/logout">(logout)</a>
 {% else %}
     <a id="hlogin" href="/login/vkontakte">login via vk</a>
 {% endif %}

@@ -22,6 +22,27 @@ $('#like').click(function() {
     });
 });
 
+$('#hate').click(function() {
+    event.stopPropagation();
+    data = {
+            "picid" : $('#demotivator').data('picid'),
+            "user"  : userid
+            };
+    $.ajax({
+        type: "POST",
+        url: "/api/hate",
+        data: data,
+        success: function(r) {
+            if (r.status == "ok") {
+                alert('Ваш голос засчитан!');
+             } else {
+                alert('not ok');
+            }
+        }
+    });
+});
+
+
 $('#next').click(function() {
     event.stopPropagation();
     data = {};
