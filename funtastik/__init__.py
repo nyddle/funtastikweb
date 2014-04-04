@@ -38,6 +38,11 @@ from flaskext.mysql import MySQL
 from flask.ext.pymongo import PyMongo
 from pymongo import MongoClient
 
+from flask_oauth import OAuth
+import vkontakte as vk
+from RedisSessionStore import *
+
+
 r = redis.StrictRedis.from_url(os.getenv('REDISTOGO_URL', 'redis://127.0.0.1:6379'))
 if (not r):
     sys.exit(1)
@@ -70,6 +75,25 @@ app.config['MONGO2_HOST'] = '95.85.22.116'
 app.config['MONGO2_PORT'] = 27017
 mongo2 = PyMongo(app, config_prefix='MONGO2')
 #app.config[''] = 'mongodb://heroku:ewnQct-znVkleYYjaTA3gMrRS_RfB59ty_HvX28Y4knC-4mlUblyJph7rAF21lKTGZB5Syx9F-aD2Okl-JMiEw@oceanic.mongohq.com:10021/app23598021'
+
+
+# Oauth stuff
+
+VKONTAKTE_APP_ID = os.getenv('VKONTAKTE_APP_ID', '3706801') #'3698600'
+VKONTAKTE_APP_SECRET = os.getenv('VKONTAKTE_APP_SECRET', '5AP5clufqwBPqZ8yE9YJ') #'TrZKHQ860aoa5bEVk3Ja'
+
+oauth = OAuth()
+
+strategies = {}
+
+strategies['vkontakte'] = oauth.remote_app('vk-app',
+    base_url='https://oauth.vk.com/',
+    request_token_url=None,
+    access_token_url='https://oauth.vk.com/access_token',
+    authorize_url='http://oauth.vk.com/authorize',
+    consumer_key=VKONTAKTE_APP_ID,
+    consumer_secret=VKONTAKTE_APP_SECRET,
+)
 
 
 
@@ -140,4 +164,54 @@ def index():
 {u'secure_url': u'https://res.cloudinary.com/ummwut/image/upload/v1376132166/1001.gif', u'public_id': u'1001', u'format': u'gif', u'url': u'http://res.cloudinary.com/ummwut/image/upload/v1376132166/1001.gif', u'created_at': u'2013-08-10T10:56:06Z', u'bytes': 614274, u'height': 302, u'width': 288, u'version': 1376132166, u'signature': u'573f5b4a5947a0f185371f559c7d96cb3071ee36', u'type': u'upload', u'pages': 40, u'resource_type': u'image'}
 """
 
+
+@app.route('/login/<strategy>')
+def login(strategy):
+    print request
+    return strategies[strategy].authorize(callback=url_for(strategy+'_authorized', strategy=strategy,
+        next=request.args.get('next') or request.referrer or None,redirect_uri='http://www.sfuntastik.herokuapp.com',
+        _external=True))
+
+vkontakte = strategies['vkontakte']
+
+
+@app.route('/login/authorized/vkontakte')
+@vkontakte.authorized_handler
+def vkontakte_authorized(resp):
+
+    next_url = request.args.get('next') or url_for('index')
+    if resp is None:
+        flash(u'You denied the request to sign in.')
+        return redirect(next_url)
+
+    strategy = 'vkontakte'
+    session['oauth_token'] = (resp['access_token'], '')
+    print resp
+    user_id = resp['user_id']
+    me = strategies[strategy].get('https://api.vk.com/method/getProfiles?uid='+str(user_id)+'&access_token='+resp['access_token'])
+    response = me.data['response'][0]
+    print me.data
+    username = response['first_name'] + ' ' + response['last_name']
+    print '* user ' + username + ' tries to log in'
+    user_id = 'vk'+str(user_id)
+    user = get_user_by_id(user_id)   #User.query.filter_by(name=resp['screen_name']).first()
+    print user
+    print user.keys()
+    # user never signed on
+    if ((user is None) or (len(user.keys()) == 0)):
+        print 'Creating new user!!'
+        usr = create_social_user(user_id, username, resp['access_token'])
+        print usr
+
+    """
+    # in any case we update the authenciation token in the db
+    # In case the user temporarily revoked access we will have
+    # new tokens here.
+    user.oauth_token = resp['oauth_token']
+    user.oauth_secret = resp['oauth_token_secret']
+    """
+    update_access_token(user_id, resp['access_token'])
+    session['user_id'] = user_id
+    flash('You were signed in')
+    return redirect(next_url)
 
