@@ -2,11 +2,16 @@ $(document).ready(function() {
 
 var userid = $('#hlogin').data('userid') || 'anonymous';
 
+
 $('#like').click(function() {
+
     event.stopPropagation();
+    var likeswitch = $(this).hasClass('on') ? 'off' : 'on';
+
     data = {
             "picid" : $('#demotivator').data('picid'),
-            "user"  : userid
+            "user"  : userid,
+            "likeswitch": likeswitch
             };
     $.ajax({
         type: "POST",
@@ -14,7 +19,8 @@ $('#like').click(function() {
         data: data,
         success: function(r) {
             if (r.status == "ok") {
-                alert('Ваш голос засчитан!');
+                alert('swith to ' + likeswitch);
+                $('#like').toggleClass("on");
              } else {
                 alert('not ok');
             }
@@ -22,26 +28,30 @@ $('#like').click(function() {
     });
 });
 
-$('#hate').click(function() {
+$('#like').click(function() {
+
     event.stopPropagation();
+    var likeswitch = $(this).hasClass('on') ? 'off' : 'on';
+
     data = {
             "picid" : $('#demotivator').data('picid'),
-            "user"  : userid
+            "user"  : userid,
+            "likeswitch": likeswitch
             };
     $.ajax({
         type: "POST",
-        url: "/api/hate",
+        url: "/api/like",
         data: data,
         success: function(r) {
             if (r.status == "ok") {
-                alert('Ваш голос засчитан!');
+                alert('swith to ' + likeswitch);
+                $('#like').toggleClass("on");
              } else {
                 alert('not ok');
             }
         }
     });
 });
-
 
 $('#next').click(function() {
     event.stopPropagation();
