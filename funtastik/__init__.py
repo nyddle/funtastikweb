@@ -123,18 +123,52 @@ app.config['DEBUG'] = True
 def like():
 
     if request.method == "POST":
+
         user_id = request.form['user']
         pic_id = request.form['picid']
+        likeswitch = request.form['likeswitch']
 
         registered = mongo.db.users.find({'user': user_id}).count()
-        print registered
         if (registered == 0):
             mongo.db.users.insert({'user': user_id})
-        mongo.db.users.update({'user': user_id}, { '$push' : { 'favorites' : pic_id } })
+
+        if (likeswitch == 'on'):
+            mongo.db.users.update({'user': user_id}, { '$push' : { 'favorites' : pic_id } })
+
+        if (likeswitch == 'off'):
+            mongo.db.users.update({'user': user_id}, { '$pull' : { 'favorites' : pic_id } })
+
+
         return jsonify({'status': "ok" })
 
     else:
         return jsonify({'status': "err", 'error': 'Rwong method!'})
+
+@app.route('/api/hate', methods=['POST'])
+def hate():
+
+    if request.method == "POST":
+
+        user_id = request.form['user']
+        pic_id = request.form['picid']
+        hateswitch = request.form['hateswitch']
+
+        registered = mongo.db.users.find({'user': user_id}).count()
+        if (registered == 0):
+            mongo.db.users.insert({'user': user_id})
+
+        if (hateswitch == 'on'):
+            mongo.db.users.update({'user': user_id}, { '$push' : { 'favorites' : pic_id } })
+
+        if (hateswitch == 'off'):
+            mongo.db.users.update({'user': user_id}, { '$pull' : { 'favorites' : pic_id } })
+
+
+        return jsonify({'status': "ok" })
+
+    else:
+        return jsonify({'status': "err", 'error': 'Rwong method!'})
+
 
 @app.route('/api/next', methods=['GET'])
 def next():
