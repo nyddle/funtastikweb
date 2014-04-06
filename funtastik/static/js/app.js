@@ -7,63 +7,56 @@ $('#like').click(function() {
 
     event.stopPropagation();
 
-    if ($('#hate').hasClass('on')) {
-        alert('you hate it already')
-    } else {
+    if ($('#hate').removeClass('on'));
 
-        var likeswitch = $(this).hasClass('on') ? 'off' : 'on';
+    var likeswitch = $(this).hasClass('on') ? 'off' : 'on';
 
-        data = {
-                "picid" : $('#demotivator').data('picid'),
-                "user"  : userid,
-                "likeswitch": likeswitch
-                };
-        $.ajax({
-            type: "POST",
-            url: "/api/like",
-            data: data,
-            success: function(r) {
-                if (r.status == "ok") {
-                    alert('swith to ' + likeswitch);
-                    $('#like').toggleClass("on");
-                 } else {
-                    alert('not ok');
-                }
+    data = {
+            "picid" : $('#demotivator').data('picid'),
+            "user"  : userid,
+            "likeswitch": likeswitch
+            };
+    $.ajax({
+        type: "POST",
+        url: "/api/like",
+        data: data,
+        success: function(r) {
+            if (r.status == "ok") {
+                alert('swith to ' + likeswitch);
+                $('#like').toggleClass("on");
+             } else {
+                alert('not ok');
             }
-        });
-    }
+        }
+    });
 });
 
 $('#hate').click(function() {
 
     event.stopPropagation();
 
-    if ($('#like').hasClass('on')) {
-        alert('you hate it already')
-        
-    } else {
+    $('#like').removeClass('on');
 
-        var hateswitch = $(this).hasClass('on') ? 'off' : 'on';
+    var hateswitch = $(this).hasClass('on') ? 'off' : 'on';
 
-        data = {
-                "picid" : $('#demotivator').data('picid'),
-                "user"  : userid,
-                "hateswitch": hateswitch
-                };
-        $.ajax({
-            type: "POST",
-            url: "/api/hate",
-            data: data,
-            success: function(r) {
-                if (r.status == "ok") {
-                    alert('swith to ' + hateswitch);
-                    $('#hate').toggleClass("on");
-                 } else {
-                    alert('not ok');
-                }
+    data = {
+            "picid" : $('#demotivator').data('picid'),
+            "user"  : userid,
+            "hateswitch": hateswitch
+            };
+    $.ajax({
+        type: "POST",
+        url: "/api/hate",
+        data: data,
+        success: function(r) {
+            if (r.status == "ok") {
+                alert('swith to ' + hateswitch);
+                $('#hate').toggleClass("on");
+             } else {
+                alert('not ok');
             }
-        });
-    }
+        }
+    });
 });
 
 $('#next').click(function() {

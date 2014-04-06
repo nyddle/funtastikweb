@@ -132,11 +132,13 @@ def like():
         if (registered == 0):
             mongo.db.users.insert({'user': user_id})
 
+        mongo.db.users.update({'user': user_id}, { '$pull' : { 'hate' : pic_id } })
+
         if (likeswitch == 'on'):
-            mongo.db.users.update({'user': user_id}, { '$push' : { 'favorites' : pic_id } })
+            mongo.db.users.update({'user': user_id}, { '$push' : { 'like' : pic_id } })
 
         if (likeswitch == 'off'):
-            mongo.db.users.update({'user': user_id}, { '$pull' : { 'favorites' : pic_id } })
+            mongo.db.users.update({'user': user_id}, { '$pull' : { 'like' : pic_id } })
 
 
         return jsonify({'status': "ok" })
@@ -156,6 +158,8 @@ def hate():
         registered = mongo.db.users.find({'user': user_id}).count()
         if (registered == 0):
             mongo.db.users.insert({'user': user_id})
+
+        mongo.db.users.update({'user': user_id}, { '$pull' : { 'like' : pic_id } })
 
         if (hateswitch == 'on'):
             mongo.db.users.update({'user': user_id}, { '$push' : { 'favorites' : pic_id } })

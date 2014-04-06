@@ -83,6 +83,12 @@ a:hover  {
     background: url(../images/up-active.png) top left no-repeat; 
 }
 
+#like.on {
+    background: url(../images/up-active.png) top left no-repeat; 
+}
+
+
+
 #hate {
     background: url(../images/down.png) top left no-repeat; 
 }
@@ -91,11 +97,20 @@ a:hover  {
     background: url(../images/down-active.png) top left no-repeat; 
 }
 
+#hate.on {
+    background: url(../images/down-active.png) top left no-repeat; 
+}
+
+
 #share {
     background: url(../images/share.png) top left no-repeat; 
 }
 
 #share:hover {
+    background: url(../images/share-active.png) top left no-repeat; 
+}
+
+#share.on {
     background: url(../images/share-active.png) top left no-repeat; 
 }
 
