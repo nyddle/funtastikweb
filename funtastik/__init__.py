@@ -184,6 +184,15 @@ def next():
     #return jsonify({'res' : 'ok', 'data' : [ pic["cloudinary"] for pic in mongo2.db.image.find({}).limit(-1).skip(random.randint(1, 100)) ]})
     return jsonify({'res' : 'ok', 'data' : [ pic["cloudinary"] for pic in mongo2.db.image.find({ 'random' : { '$gt' : random.uniform(0,1) } }) ]})
 
+@app.route('/api/load', methods=['GET'])
+def next():
+
+    if request.method == "POST":
+        return jsonify({'status': "err", 'error': 'Rwong method!'})
+    #return jsonify({'res' : 'ok', 'data' : [ pic["cloudinary"] for pic in mongo2.db.image.find({}).limit(-1).skip(random.randint(1, 100)) ]})
+    return jsonify({'res' : 'ok', 'data' : [ pic["cloudinary"] for pic in mongo2.db.image.find({ 'public_id' :  'unknown' }) ]})
+
+
 
 @app.route('/api/favorites', methods=['GET'])
 def favorites():
@@ -198,7 +207,14 @@ def favorites():
 
 
 @app.route('/')
-def index():
+@app.route('/<picid>')
+def index(picid):
+
+    if picid:
+        picid = mongo2.db.image.find_one({ 'cloudinary.public_id' : picid  })
+        if picid:
+            return render_template('home.html',image=picid['cloudinary'])
+
     return render_template('home.html')
 
 """

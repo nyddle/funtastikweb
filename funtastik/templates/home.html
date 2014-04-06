@@ -64,7 +64,13 @@
 <a id="share" href="http://vkontakte.ru/share.php?url=http://funtastik.herokuapp.com" target="_blank" class="icon">&nbsp</a>
 <br>
 <br>
-<a align="center" href="#"><img id="demotivator" data-picid="-1" src="http://cs7009.vk.me/c540100/v540100653/c500/2TL9XHB1f0U.jpg" /></a>
+
+{% if image %}
+    <a align="center" href="#"><img id="demotivator" data-picid="{{ image['public_id'] }}" src="{{ image['url'] }}" /></a>
+{% else %}
+    <a align="center" href="#"><img id="demotivator" data-picid="-1" src="http://cs7009.vk.me/c540100/v540100653/c500/2TL9XHB1f0U.jpg" /></a>
+{% endif %}
+
 <br> 
 </div>
 </body>
