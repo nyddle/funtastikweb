@@ -64,7 +64,7 @@ h4 {
   color: #fff;
 }
 
-a  {
+a.icon  {
     display: inline-block; /* or inline-block; I think IE would respect it since a link is an inline-element */
     text-align: center;
     line-height: 60px; 
@@ -72,8 +72,6 @@ a  {
     color: green;
 } /* line height should be equal to the height of the image to vertically center using this technique */
 
-a:hover  {
-} /* line height should be equal to the height of the image to vertically center using this technique */
 
 #like {
     background: url(../images/up.png) top left no-repeat; 

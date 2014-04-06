@@ -129,11 +129,13 @@ def like():
         likeswitch = request.form['likeswitch']
 
         registered = mongo.db.users.find({'user': user_id}).count()
+        print registered
         if (registered == 0):
             mongo.db.users.insert({'user': user_id})
 
         mongo.db.users.update({'user': user_id}, { '$pull' : { 'hate' : pic_id } })
 
+        #TODO: use ? : syntax
         if (likeswitch == 'on'):
             mongo.db.users.update({'user': user_id}, { '$push' : { 'like' : pic_id } })
 
@@ -162,10 +164,10 @@ def hate():
         mongo.db.users.update({'user': user_id}, { '$pull' : { 'like' : pic_id } })
 
         if (hateswitch == 'on'):
-            mongo.db.users.update({'user': user_id}, { '$push' : { 'favorites' : pic_id } })
+            mongo.db.users.update({'user': user_id}, { '$push' : { 'hate' : pic_id } })
 
         if (hateswitch == 'off'):
-            mongo.db.users.update({'user': user_id}, { '$pull' : { 'favorites' : pic_id } })
+            mongo.db.users.update({'user': user_id}, { '$pull' : { 'hate' : pic_id } })
 
 
         return jsonify({'status': "ok" })
