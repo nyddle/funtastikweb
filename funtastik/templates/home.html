@@ -12,54 +12,16 @@
 
 	<link rel="shortcut icon" href="favicon.ico">
 	<link rel="apple-touch-icon" href="favicon.png">
-    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet">
+    <!-- <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet"> --!>
     <!-- <link rel="stylesheet" href="style.css" /> --!>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
   
     <link rel="StyleSheet" href="/css/index.css" />
-    <link rel="StyleSheet" href="/css/normalize.css">
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 </head>
 <body>
-<script src="http://vk.com/js/api/openapi.js" type="text/javascript"></script>
+<!-- <script src="http://vk.com/js/api/openapi.js" type="text/javascript"></script> --!>
 
-<!-- <div id="login_button" onclick="VK.Auth.login(authInfo);"></div> --!>
-
-<script language="javascript">
-VK.init({
-  apiId: 4274771
-});
-function authInfo(response) {
-  if (response.session) {
-    //alert('user: '+response.session.mid);
-    VK.Api.call('users.get',  {fields: ['uid', 'first_name', 'last_name', 'photo'], order: 'name', uids: response.session.mid}, function(r){
-       if(r.response){
-        r = r.response;
-        $('.user__info').find('h2').text(r[0].first_name + ' ' + r[0].last_name);
-        $('.user__avatar').find('img').attr('src', r[0].photo);
-        $('.mylink').attr('href', '/' + response.session.mid);
-        $('.friendslink').attr('href', '/' + response.session.mid + '/friends');
-      }
-    });
-
-    yourid = response.session.mid; 
-    //alert(yourid);
-    /*
-    VK.Api.call('users.get',  {fields: ['uid', 'first_name', 'last_name'], order: 'name', uids: '{{ userid }}'}, function(r){
-       if(r.response){
-        r = r.response;
-        $('#whichwall').text((r[0].first_name + ' ' + r[0].last_name));
-        alert(r[0].first_name + ' ' + r[0].last_name);
-      }
-    });
-    */
-  } else {
-    alert('not auth');
-  }
-}
-VK.Auth.getLoginStatus(authInfo);
-VK.UI.button('login_button');
-</script>
 
 
 <script type="text/javascript">(function() {
@@ -72,7 +34,7 @@ VK.UI.button('login_button');
     h.appendChild(s);
   }})();</script>
 
-<div align="center" class="pluso" data-background="transparent" data-options="big,round,line,horizontal,counter,theme=06" data-services="vkontakte,odnoklassniki,moimir" data-user="474440128"></div>
+<!-- <div align="center" class="pluso" data-background="transparent" data-options="big,round,line,horizontal,counter,theme=06" data-services="vkontakte,odnoklassniki,moimir" data-user="474440128"></div> --!>
 
 
 {% if session.username %}
@@ -94,12 +56,9 @@ VK.UI.button('login_button');
 </div>
 <br><br>
 
-<!-- <a href="#"><<</a> | --!>
-<a id="like" href="#">like</a> |
-<a id="hate" href="#">hate</a> |
-<a href="#">share</a> |
-<a href="http://vkontakte.ru/share.php?url=http://funtastik.herokuapp.com" target="_blank">Поделиться</a>
-<a id="next" href="#">>></a>
+<a id="like" href="#">&nbsp</a>
+<a id="hate" href="#">&nbsp</a>
+<a id="share" href="http://vkontakte.ru/share.php?url=http://funtastik.herokuapp.com" target="_blank">&nbsp</a>
 <br>
 <br>
 <img id="demotivator" data-picid="-1" src="http://cs7009.vk.me/c540100/v540100653/c500/2TL9XHB1f0U.jpg" />

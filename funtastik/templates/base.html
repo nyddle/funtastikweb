@@ -7,45 +7,7 @@
     <meta name="description" content="">
     <meta name="robots" content="index, follow">
     <meta content="index" name="robots">
-    <!--
-    {% assets "js_libs" %}
-        <script type="text/javascript" src="{{ ASSET_URL }}"></script>
-    {% endassets %}
-    --!>
-    {% assets "css_main" %}
-        <link rel="stylesheet" href="{{ ASSET_URL }}" type="text/css" />
-    {% endassets %}
 
-    <!-- Favicon -->
-    <link rel="Shortcut Icon" type="image/x-icon" href="">
-    <link href="/static/images/favicon-2.ico" rel="shortcut icon">
-    <link href="{{ url_for('atom_feed') }}" rel="alternate" title="Tech news from Russia" type="application/atom+xml">
-
-    <link rel="image_src" href="http://www.itimes.ru/static/images/cup.png" />
-    <meta property="og:image" content="http://www.itimes.ru/static/images/cup.png" />
-
-    <script type="text/javascript" src="/static/js/libs/jquery-1.6.2.min.js"></script>
-    <script type="text/javascript" src="/static/js/libs/jquery.leanModal.min.js"></script>
-    <script type="text/javascript" src="/static/js/libs/jquery.masonry.min.js"></script>
-    <script type="text/javascript" src="/static/js//libs/jquery.infinitescroll.min.js"></script>
-    <script type="text/javascript" src="/static/js/libs/jquery.timeago.js"></script>
-    <script type="text/javascript" src="/static/js/libs/test_helpers.js"></script>
-    <script type="text/javascript" src="/static/js/libs/humane.min.js"></script>
-
-    <script type="text/javascript" src="/static/js/libs/happy.js"></script>
-    <script type="text/javascript" src="/static/js/libs/happy.methods.js"></script>
-
-    {% assets "js_main" %}
-        <script type="text/javascript" src="{{ ASSET_URL }}"></script>
-    {% endassets %}
-    <script type="text/javascript">(function() { 
-          if (window.pluso)if (typeof window.pluso.start == "function") return; 
-          var d = document, s = d.createElement('script'), g = 'getElementsByTagName'; 
-          s.type = 'text/javascript'; s.charset='UTF-8'; s.async = true; 
-          s.src = ('https:' == window.location.protocol ? 'https' : 'http')  + '://share.pluso.ru/pluso-like.js'; 
-          var h=d[g]('head')[0] || d[g]('body')[0]; 
-          h.appendChild(s); 
-          })();</script> 
 </head>
 <body>
 
@@ -136,18 +98,6 @@
         <script>setKeyboardNavigation();</script>
     {% endif %}
 </div>
-<!--LiveInternet counter--><script type="text/javascript"><!-- 
-document.write("<a href='http://www.liveinternet.ru/click' "+ 
-"target=_blank><img src='//counter.yadro.ru/hit?t14.6;r"+ 
-escape(document.referrer)+((typeof(screen)=="undefined")?"": 
-";s"+screen.width+"*"+screen.height+"*"+(screen.colorDepth? 
-screen.colorDepth:screen.pixelDepth))+";u"+escape(document.URL)+ 
-";"+Math.random()+ 
-"' alt='' title='LiveInternet: показано число просмотров за 24"+ 
-" часа, посетителей за 24 часа и за сегодня' "+ 
-"border='0' width='88' height='31'><\/a>") 
-//--></script><!--/LiveInternet-->
-
 </body>
 </html>
 
