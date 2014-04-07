@@ -19,8 +19,8 @@ $('#demotivator').click(function(event) {
                 console.log(r.data);
                 $('#demotivator').attr('src', r.data[0]['cloudinary'].url);
                 $('#demotivator').data('picid', r.data[0]['cloudinary'].public_id);
-                $('#upvotes').html(r.data[0]['cloudinary'].fun_likes);
-                $('#downvotes').html(r.data[0]['cloudinary'].fun_hates);
+                $('#upvotes').html(r.data[0].fun_like);
+                $('#downvotes').html(r.data[0].fun_hate);
              } else {
                 alert('not ok');
             }
