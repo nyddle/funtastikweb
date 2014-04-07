@@ -215,6 +215,10 @@ def index(picid=None):
         picid = mongo2.db.image.find_one({ 'cloudinary.public_id' : picid  })
         if picid:
             return render_template('home.html',image=picid['cloudinary'])
+    else:
+        picid = mongo2.db.image.find_one({ 'random' : { '$gt' : random.uniform(0,1) } })
+        if picid:
+            return render_template('home.html',image=picid['cloudinary'])
 
     return render_template('home.html')
 
