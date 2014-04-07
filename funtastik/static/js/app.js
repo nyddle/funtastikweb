@@ -17,8 +17,10 @@ $('#demotivator').click(function(event) {
         success: function(r) {
             if (r.data) {
                 console.log(r.data);
-                $('#demotivator').attr('src', r.data[0].url);
-                $('#demotivator').data('picid', r.data[0].public_id);
+                $('#demotivator').attr('src', r.data[0]['cloudinary'].url);
+                $('#demotivator').data('picid', r.data[0]['cloudinary'].public_id);
+                $('#upvotes').html(r.data[0]['cloudinary'].fun_likes);
+                $('#downvotes').html(r.data[0]['cloudinary'].fun_hates);
              } else {
                 alert('not ok');
             }
@@ -94,8 +96,8 @@ $('#next').click(function(event) {
         data: data,
         success: function(r) {
             if (r.data) {
-                $('#demotivator').attr('src', r.data[0].url);
-                $('#demotivator').data('picid', r.data[0].public_id);
+                $('#demotivator').attr('src', r.data[0]['cloudinary'].url);
+                $('#demotivator').data('picid', r.data[0]['cloudinary'].public_id);
              } else {
                 alert('not ok');
             }

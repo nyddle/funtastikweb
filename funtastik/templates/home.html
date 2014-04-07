@@ -59,9 +59,9 @@
 <br><br>
 -->
 
-100
+<span id="upvotes"></span>
 <a id="like" href="#" class="icon">&nbsp</a>
-5
+<span id="downvotes"></span>
 <a id="hate" href="#" class="icon">&nbsp</a>
 &nbsp;&nbsp;
 <a id="share" href="http://vkontakte.ru/share.php?url=http://funtastik.herokuapp.com" target="_blank" class="icon">&nbsp</a>
@@ -69,7 +69,7 @@
 <br>
 
 {% if image %}
-    <a align="center" href="#"><img id="demotivator" data-picid="{{ image['public_id'] }}" src="{{ image['url'] }}" /></a>
+    <a align="center" href="#"><img id="demotivator" data-picid="{{ image['cloudinary']['public_id'] }}" src="{{ image['cloudinary']['url'] }}" /></a>
 {% else %}
     <a align="center" href="#"><img id="demotivator" data-picid="-1" src="http://cs7009.vk.me/c540100/v540100653/c500/2TL9XHB1f0U.jpg" /></a>
 {% endif %}
