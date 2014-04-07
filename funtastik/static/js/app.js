@@ -6,6 +6,9 @@ $('#demotivator').click(function() {
 
     event.stopPropagation();
 
+    $('a').removeClass('on');
+    $('a').removeClass('off');
+
     data = {};
     $.ajax({
         type: "GET",
@@ -13,6 +16,7 @@ $('#demotivator').click(function() {
         data: data,
         success: function(r) {
             if (r.data) {
+                console.log(r.data);
                 $('#demotivator').attr('src', r.data[0].url);
                 $('#demotivator').data('picid', r.data[0].public_id);
              } else {

@@ -182,8 +182,9 @@ def next():
     if request.method == "POST":
         return jsonify({'status': "err", 'error': 'Rwong method!'})
     #return jsonify({'res' : 'ok', 'data' : [ pic["cloudinary"] for pic in mongo2.db.image.find({}).limit(-1).skip(random.randint(1, 100)) ]})
-    return jsonify({'res' : 'ok', 'data' : [ pic["cloudinary"] for pic in mongo2.db.image.find({ 'random' : { '$gt' : random.uniform(0,1) } }) ]})
+    return jsonify({'res' : 'ok', 'data' : [ pic["cloudinary"] for pic in mongo2.db.image.find({ 'random' : { '$gt' : random.uniform(0,1) } }).limit(1) ]})
 
+"""
 @app.route('/api/load', methods=['GET'])
 def next():
 
@@ -191,7 +192,7 @@ def next():
         return jsonify({'status': "err", 'error': 'Rwong method!'})
     #return jsonify({'res' : 'ok', 'data' : [ pic["cloudinary"] for pic in mongo2.db.image.find({}).limit(-1).skip(random.randint(1, 100)) ]})
     return jsonify({'res' : 'ok', 'data' : [ pic["cloudinary"] for pic in mongo2.db.image.find({ 'public_id' :  'unknown' }) ]})
-
+"""
 
 
 @app.route('/api/favorites', methods=['GET'])
