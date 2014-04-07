@@ -208,7 +208,7 @@ def favorites():
 
 @app.route('/')
 @app.route('/<picid>')
-def index(picid):
+def index(picid=None):
 
     if picid:
         picid = mongo2.db.image.find_one({ 'cloudinary.public_id' : picid  })
