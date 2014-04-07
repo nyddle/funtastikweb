@@ -67,6 +67,7 @@ h4 {
 a.icon  {
     display: inline-block; /* or inline-block; I think IE would respect it since a link is an inline-element */
     text-align: center;
+    text-decoration: none;
     line-height: 60px; 
     width: 60px; 
     color: green;
