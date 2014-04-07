@@ -137,9 +137,11 @@ def like():
 
         #TODO: use ? : syntax
         if (likeswitch == 'on'):
+            mongo2.db.image.update({'cloudinary.public_id': pic_id}, { '$inc' : { 'fun_like' : 1 } })
             mongo.db.users.update({'user': user_id}, { '$push' : { 'like' : pic_id } })
 
         if (likeswitch == 'off'):
+            mongo2.db.image.update({'cloudinary.public_id': pic_id}, { '$inc' : { 'fun_like' : -1 } })
             mongo.db.users.update({'user': user_id}, { '$pull' : { 'like' : pic_id } })
 
 
@@ -164,9 +166,11 @@ def hate():
         mongo.db.users.update({'user': user_id}, { '$pull' : { 'like' : pic_id } })
 
         if (hateswitch == 'on'):
-            mongo.db.users.update({'user': user_id}, { '$push' : { 'hate' : pic_id } })
+            mongo2.db.image.update({'cloudinary.public_id': pic_id}, { '$inc' : { 'fun_hate' : 1 } })
+            mongo.db.image.update({'user': user_id}, { '$push' : { 'hate' : pic_id } })
 
         if (hateswitch == 'off'):
+            mongo2.db.image.update({'cloudinary.public_id': pic_id}, { '$inc' : { 'fun_hate' : -1 } })
             mongo.db.users.update({'user': user_id}, { '$pull' : { 'hate' : pic_id } })
 
 
