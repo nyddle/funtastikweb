@@ -2,9 +2,9 @@ $(document).ready(function() {
 
 var userid = $('#hlogin').data('userid') || 'anonymous';
 
-$('#demotivator').click(function() {
+$('#demotivator').click(function(event) {
 
-    event.stopPropagation();
+    event.preventDefault();
 
     $('a').removeClass('on');
     $('a').removeClass('off');
@@ -29,9 +29,9 @@ $('#demotivator').click(function() {
 });
 
 
-$('#like').click(function() {
+$('#like').click(function(event) {
 
-    event.stopPropagation();
+    event.preventDefault();
 
     if ($('#hate').removeClass('on'));
 
@@ -56,9 +56,9 @@ $('#like').click(function() {
     });
 });
 
-$('#hate').click(function() {
+$('#hate').click(function(event) {
 
-    event.stopPropagation();
+    event.preventDefault();
 
     $('#like').removeClass('on');
 
@@ -83,8 +83,10 @@ $('#hate').click(function() {
     });
 });
 
-$('#next').click(function() {
-    event.stopPropagation();
+$('#next').click(function(event) {
+
+    event.preventDefault();
+
     data = {};
     $.ajax({
         type: "GET",
@@ -102,7 +104,9 @@ $('#next').click(function() {
 });
 
 $('#favorites').click(function() {
-    event.stopPropagation();
+
+    event.preventDefault();
+
     data = {
             "user"  : userid
             };

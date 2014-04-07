@@ -129,7 +129,7 @@ def like():
         likeswitch = request.form['likeswitch']
 
         registered = mongo.db.users.find({'user': user_id}).count()
-        print registered
+
         if (registered == 0):
             mongo.db.users.insert({'user': user_id})
 
@@ -181,7 +181,6 @@ def next():
 
     if request.method == "POST":
         return jsonify({'status': "err", 'error': 'Rwong method!'})
-    #return jsonify({'res' : 'ok', 'data' : [ pic["cloudinary"] for pic in mongo2.db.image.find({}).limit(-1).skip(random.randint(1, 100)) ]})
     return jsonify({'res' : 'ok', 'data' : [ pic["cloudinary"] for pic in mongo2.db.image.find({ 'random' : { '$gt' : random.uniform(0,1) } }).limit(1) ]})
 
 """
