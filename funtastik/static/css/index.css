@@ -113,3 +113,15 @@ a.icon  {
     background: url(../images/share-active.png) top left no-repeat; 
 }
 
+#search {
+    background: url(../images/search.png) top left no-repeat; 
+}
+
+#search:hover {
+    background: url(../images/search-active.png) top left no-repeat; 
+}
+
+#search.on {
+    background: url(../images/search-active.png) top left no-repeat; 
+}
+
