@@ -1,6 +1,27 @@
 $(document).ready(function() {
 
 var userid = $('#hlogin').data('userid') || 'anonymous';
+var likes = [];
+var hates = [];
+
+var data = { 'user' : userid };
+$.ajax({
+    type: "GET",
+    url: "/api/user",
+    data: data,
+    success: function(r) {
+        if (r) {
+            console.log(JSON.parse(r));
+            var user = JSON.parse(r);
+            likes = user['like'];
+            hate = user['hate'];
+         } else {
+            alert('not ok');
+        }
+    }
+});
+
+
 
 $('#demotivator').click(function(event) {
 
@@ -21,6 +42,13 @@ $('#demotivator').click(function(event) {
                 $('#demotivator').data('picid', r.data[0]['cloudinary'].public_id);
                 $('#upvotes').html(r.data[0].fun_like);
                 $('#downvotes').html(r.data[0].fun_hate);
+                if (_.indexOf(likes, r.data[0]['cloudinary'].public_id) > -1) {
+                    $('#like').addClass('on');
+                }
+                if (_.indexOf(hates, r.data[0]['cloudinary'].public_id) > -1) {
+                    $('#hate').addClass('on');
+                }
+
              } else {
                 alert('not ok');
             }
@@ -57,6 +85,11 @@ $('#like').click(function(event) {
         data: data,
         success: function(r) {
             if (r.status == "ok") {
+                if ($('#like').hasClass('on')) {
+                    likes = _.without(likes, $('#demotivator').data('picid'));
+                } else {
+                    likes.push($('#demotivator').data('picid'));
+                }
                 $('#like').toggleClass("on");
              } else {
                 alert('not ok');
@@ -93,6 +126,11 @@ $('#hate').click(function(event) {
         data: data,
         success: function(r) {
             if (r.status == "ok") {
+                if ($('#hate').hasClass('on')) {
+                    hates = _.without(hates, $('#demotivator').data('picid'));
+                } else {
+                    hates.push($('#demotivator').data('picid'));
+                }
                 $('#hate').toggleClass("on");
              } else {
                 alert('not ok');

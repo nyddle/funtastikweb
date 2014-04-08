@@ -11,6 +11,7 @@ import datetime
 from time import time
 import json
 #import bson
+from bson.json_util import dumps
 
 
 from flask import Flask, request, session, g, redirect, url_for, abort, \
@@ -208,7 +209,14 @@ def favorites():
     favorites = mongo.db.users.find_one({'user': user_id}, { 'favorites' : 1 })
     return jsonify(favorites)
 
+@app.route('/api/user', methods=['GET'])
+def favorites():
 
+    if request.method == "POST":
+        return jsonify({'status': "err", 'error': 'Rwong method!'})
+    user_id = request.args['user']
+    user = mongo.db.users.find_one({'user': user_id})
+    return dumps(user)
 
 
 @app.route('/')
