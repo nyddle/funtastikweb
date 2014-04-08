@@ -35,9 +35,16 @@ $('#like').click(function(event) {
 
     event.preventDefault();
 
-    if ($('#hate').removeClass('on'));
+    if ($('#hate').hasClass('on')) {
+        $('#hate').removeClass('on');
+        var downvotes = $('#downvotes').html() || 0;
+        $('#downvotes').html(--downvotes);
+    }
 
     var likeswitch = $(this).hasClass('on') ? 'off' : 'on';
+
+    var upvotes = $('#upvotes').html() || 0;
+    $('#upvotes').html(likeswitch == 'on' ? ++upvotes : --upvotes);
 
     data = {
             "picid" : $('#demotivator').data('picid'),
@@ -62,9 +69,18 @@ $('#hate').click(function(event) {
 
     event.preventDefault();
 
-    $('#like').removeClass('on');
+    if ($('#like').hasClass('on')) {
+        $('#like').removeClass('on');
+        var upvotes = $('#upvotes').html() || 0;
+        $('#upvotes').html(--upvotes);
+    }
+
 
     var hateswitch = $(this).hasClass('on') ? 'off' : 'on';
+
+    var downvotes = $('#downvotes').html() || 0;
+    $('#downvotes').html( hateswitch == 'on' ? ++downvotes : --downvotes);
+
 
     data = {
             "picid" : $('#demotivator').data('picid'),

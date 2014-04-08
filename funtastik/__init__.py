@@ -136,6 +136,7 @@ def like():
         mongo.db.users.update({'user': user_id}, { '$pull' : { 'hate' : pic_id } })
 
         #TODO: use ? : syntax
+        #TODO: check if already liked
         if (likeswitch == 'on'):
             mongo2.db.image.update({'cloudinary.public_id': pic_id}, { '$inc' : { 'fun_like' : 1 } })
             mongo.db.users.update({'user': user_id}, { '$push' : { 'like' : pic_id } })
