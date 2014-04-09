@@ -86,8 +86,10 @@ function next_demotivator(incr) {
 }
 
 
-Mousetrap.bind('right d', function() { next_demotivator(1); });
-Mousetrap.bind('left a', function() { next_demotivator(-1); });
+Mousetrap.bind('right', function() { next_demotivator(1); });
+Mousetrap.bind('d', function() { next_demotivator(1); });
+Mousetrap.bind('left', function() { next_demotivator(-1); });
+Mousetrap.bind('a', function() { next_demotivator(-1); });
 $('#demotivator').click(function(event) {
     event.preventDefault();
     next_demotivator(1);
