@@ -58,7 +58,7 @@ $('#demotivator').click(function(event) {
     $('a').removeClass('off');
 
     current++;
-    if ((current == loaded.length) || (loaded.length - current == 2)) {
+    if ((current == loaded.length) || (loaded.length - current == 3)) {
 
         data = {};
         $.ajax({
