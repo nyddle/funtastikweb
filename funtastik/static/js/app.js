@@ -4,6 +4,9 @@ var userid = $('#hlogin').data('userid') || 'anonymous';
 var likes = [];
 var hates = [];
 
+var loaded = [];
+var current = -1;
+
 var data = { 'user' : userid };
 $.ajax({
     type: "GET",
@@ -21,40 +24,64 @@ $.ajax({
     }
 });
 
+function load_pic(pic) {
 
+    pic = pic['cloudinary'];
+    $('#demotivator').attr('src', pic.url);
+    $('#demotivator').data('picid', pic.public_id);
+    $('#upvotes').html(pic.fun_like || '');
+    $('#downvotes').html(pic.fun_hate || '');
+
+    if (_.indexOf(likes, pic.public_id) > -1) {
+        $('#like').addClass('on');
+    }
+    if (_.indexOf(hates, pic.public_id) > -1) {
+        $('#hate').addClass('on');
+    }
+
+}
+
+function preload() {
+
+
+}
 
 $('#demotivator').click(function(event) {
 
+
     event.preventDefault();
+
+    //alert(loaded.length);
+
 
     $('a').removeClass('on');
     $('a').removeClass('off');
 
-    data = {};
-    $.ajax({
-        type: "GET",
-        url: "/api/next",
-        data: data,
-        success: function(r) {
-            if (r.data) {
-                console.log(r.data);
-                $('#demotivator').attr('src', r.data[0]['cloudinary'].url);
-                $('#demotivator').data('picid', r.data[0]['cloudinary'].public_id);
-                $('#upvotes').html(r.data[0].fun_like);
-                $('#downvotes').html(r.data[0].fun_hate);
-                if (_.indexOf(likes, r.data[0]['cloudinary'].public_id) > -1) {
-                    $('#like').addClass('on');
-                }
-                if (_.indexOf(hates, r.data[0]['cloudinary'].public_id) > -1) {
-                    $('#hate').addClass('on');
-                }
+    current++;
+    if ((current == loaded.length) || (loaded.length - current == 2)) {
 
-             } else {
-                alert('not ok');
+        data = {};
+        $.ajax({
+            type: "GET",
+            url: "/api/next",
+            data: data,
+            success: function(r) {
+                if (r.data) {
+                    loaded.push.apply(loaded, r.data);
+                    $.each(r.data,function(){(new Image).src=this['cloudinary'].url});        
+                    //console.log(loaded);
+                    var pic = loaded[current];
+                
+                    load_pic(pic);
+                 } else {
+                    alert('not ok');
+                }
             }
-        }
-    });
+        });
 
+    } else {
+        load_pic(loaded[current]);
+    }
 
 });
 
@@ -150,6 +177,8 @@ $('#next').click(function(event) {
         data: data,
         success: function(r) {
             if (r.data) {
+                console.log('data:');
+                console.log(r.data);
                 $('#demotivator').attr('src', r.data[0]['cloudinary'].url);
                 $('#demotivator').data('picid', r.data[0]['cloudinary'].public_id);
              } else {

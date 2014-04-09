@@ -187,7 +187,7 @@ def next():
 
     if request.method == "POST":
         return jsonify({'status': "err", 'error': 'Rwong method!'})
-    return jsonify({'res' : 'ok', 'data' : [ pic for pic in mongo2.db.image.find({ 'random' : { '$gt' : random.uniform(0,1) } }).limit(1) ]})
+    return jsonify({'res' : 'ok', 'data' : [ pic for pic in mongo2.db.image.find({ 'random' : { '$gt' : random.uniform(0,1) } }).limit(4) ]})
 
 """
 @app.route('/api/load', methods=['GET'])
