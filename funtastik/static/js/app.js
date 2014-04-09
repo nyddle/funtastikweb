@@ -32,6 +32,7 @@ function load_pic(pic) {
     $('#demotivator').data('picid', pic.public_id);
     $('#upvotes').html(pic.fun_like || '');
     $('#downvotes').html(pic.fun_hate || '');
+    $('#abslink').html('link to this demotivator: <a href="http://funtastiq.ru/' + pic.public_id + '">http://funtastiq.ru/' + pic.public_id + '</a>' );
 
     if (_.indexOf(likes, pic.public_id) > -1) {
         $('#like').addClass('on');
@@ -39,11 +40,6 @@ function load_pic(pic) {
     if (_.indexOf(hates, pic.public_id) > -1) {
         $('#hate').addClass('on');
     }
-
-}
-
-function preload() {
-
 
 }
 
