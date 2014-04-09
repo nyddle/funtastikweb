@@ -1,5 +1,6 @@
 $(document).ready(function() {
 
+
 var userid = $('#hlogin').data('userid') || 'anonymous';
 var likes = [];
 var hates = [];
@@ -46,18 +47,16 @@ function preload() {
 
 }
 
-$('#demotivator').click(function(event) {
-
-
-    event.preventDefault();
-
-    //alert(loaded.length);
-
+function next_demotivator(incr) {
 
     $('a').removeClass('on');
     $('a').removeClass('off');
 
-    current++;
+    current = current + incr;
+    if (current < 0) {
+        current = 0;
+    }
+
     if ((current == loaded.length) || (loaded.length - current == 3)) {
 
         data = {};
@@ -83,6 +82,15 @@ $('#demotivator').click(function(event) {
         load_pic(loaded[current]);
     }
 
+
+}
+
+
+Mousetrap.bind('right d', function() { next_demotivator(1); });
+Mousetrap.bind('left a', function() { next_demotivator(-1); });
+$('#demotivator').click(function(event) {
+    event.preventDefault();
+    next_demotivator(1);
 });
 
 
