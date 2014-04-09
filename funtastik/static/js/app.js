@@ -33,6 +33,7 @@ function load_pic(pic) {
     $('#upvotes').html(pic.fun_like || '');
     $('#downvotes').html(pic.fun_hate || '');
     $('#abslink').html('link to this demotivator: <a href="http://funtastiq.ru/' + pic.public_id + '">http://funtastiq.ru/' + pic.public_id + '</a>' );
+    $('#share').attr('href', 'http://vkontakte.ru/share.php?url=http://funtastiq.ru/' + pic.public_id);
 
     if (_.indexOf(likes, pic.public_id) > -1) {
         $('#like').addClass('on');
