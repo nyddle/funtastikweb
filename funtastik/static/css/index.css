@@ -63,64 +63,131 @@ h3,
 h4 {
   color: #fff;
 }
-
-a.icon  {
-    display: inline-block; /* or inline-block; I think IE would respect it since a link is an inline-element */
-    text-align: center;
-    text-decoration: none;
-    line-height: 60px; 
-    width: 60px; 
-    color: green;
+.icons_panel li{
+    display: inline-block; 
+    vertical-align: top;
+    width: 40px; 
+    height: 40px;
+    margin: 0 10px;
+    position: relative;
 } /* line height should be equal to the height of the image to vertically center using this technique */
+.icons_panel li a,
+.icons_panel li i{
+  width: 40px;
+  height: 40px;
+  display: block;
+  text-decoration: none;
+}
+.icons_panel li span{
+  position: absolute;
+  right: -3px;
+  top: -13px;
+  background: #fff;
+  padding: 2px 3px;
+  line-height: 100%;
+  font-size: 13px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  color: #db582f;
+}
+.search {
+    overflow: hidden;
+    position: relative;
+    width: 40px;
+    height: 40px;
+    -webkit-border-radius: 40px;
+    -moz-border-radius: 40px;
+    border-radius: 40px;
+    background-color: none;
+    transition: all 0.4s ease 0s;
+    text-align: left;
+}
+.search.open{
+    width: 200px;
+    background-color: #ea6238;
+}
+.search .icon{
+    cursor: pointer;
+    display: inline-block;
+    right: 0;
+    position: absolute;
+    vertical-align: middle;
+    z-index: 6;
+}
+.open .icon{
+    z-index: 4;
+}
+.search p {
+    margin: 0;
+    line-height: 40px;
+    margin-left: -200px;
+    transition: all 0.7s ease;
+}
+.search.open p {
+    margin: 0;
+}
+.search input[type="text"] {
+    border: none;
+    background: none;
+    padding: 3px 0 3px 13px;
+    width: 150px;
+    font-size: 15px;
+    color: #fff;
+}
+.search input::-moz-placeholder{
+    opacity: .75;
+    color: #fff;
+}
+.search input::-webkit-input-placeholder {
+    opacity: .75;
+    color: #fff;
+}
+
+.search input[type="submit"] {
+    background: none;
+    border: none;
+    z-index: 5;
+    position: relative;
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+}
 
 
 #like {
     background: url(../images/up.png) top left no-repeat; 
 }
-
 #like:hover {
     background: url(../images/up-active.png) top left no-repeat; 
 }
-
 #like.on {
     background: url(../images/up-active.png) top left no-repeat; 
 }
-
-
-
 #hate {
     background: url(../images/down.png) top left no-repeat; 
 }
-
 #hate:hover {
     background: url(../images/down-active.png) top left no-repeat; 
 }
-
 #hate.on {
     background: url(../images/down-active.png) top left no-repeat; 
 }
-
-
 #share {
     background: url(../images/share.png) top left no-repeat; 
 }
-
 #share:hover {
     background: url(../images/share-active.png) top left no-repeat; 
 }
-
 #share.on {
     background: url(../images/share-active.png) top left no-repeat; 
 }
-
 #search {
     background: url(../images/search.png) top left no-repeat; 
 }
-
-#search:hover {
+#search:hover, .open #search{
     background: url(../images/search-active.png) top left no-repeat; 
 }
-
 #search.on {
     background: url(../images/search-active.png) top left no-repeat; 
 }
