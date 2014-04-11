@@ -218,6 +218,10 @@ def favorites():
     user = mongo.db.users.find_one({'user': user_id})
     return dumps(user)
 
+@app.route('/search', methods=['GET'])
+def search():
+    search = request.args['s']
+    return render_template('home.html', search=search)
 
 @app.route('/')
 @app.route('/<picid>')
@@ -233,7 +237,6 @@ def index(picid=None):
             return render_template('home.html',image=picid)
 
     return render_template('home.html')
-
 """
 {u'secure_url': u'https://res.cloudinary.com/ummwut/image/upload/v1376132166/1001.gif', u'public_id': u'1001', u'format': u'gif', u'url': u'http://res.cloudinary.com/ummwut/image/upload/v1376132166/1001.gif', u'created_at': u'2013-08-10T10:56:06Z', u'bytes': 614274, u'height': 302, u'width': 288, u'version': 1376132166, u'signature': u'573f5b4a5947a0f185371f559c7d96cb3071ee36', u'type': u'upload', u'pages': 40, u'resource_type': u'image'}
 """

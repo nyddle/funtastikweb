@@ -61,23 +61,34 @@
 <br><br>
 -->
 
+{% if search %}
+<input id="searchtext" type="text" value="{{ search }}"></input>
+{% else %}
+<input id="searchtext" type="text" >wefwef</input>
+{% endif %}
+
+
 <span id="upvotes"></span>
 <a id="like" href="#" class="icon">&nbsp</a>
 <span id="downvotes"></span>
 <a id="hate" href="#" class="icon">&nbsp</a>
 &nbsp;&nbsp;
+{% if image %}
 <a id="share" href="http://vkontakte.ru/share.php?url=http://funtastiq.ru/{{ image['cloudinary'].public_id }}" target="_blank" class="icon">&nbsp</a>
+{% else %}
+<a id="share" href="http://vkontakte.ru/share.php?url=http://funtastiq.ru/" target="_blank" class="icon">&nbsp</a>
+{% endif %}
 <a id="search" href="#" class="icon">&nbsp</a>
 <br>
 <br>
 
 {% if image %}
     <a align="center" href="#"><img id="demotivator" data-picid="{{ image['cloudinary']['public_id'] }}" src="{{ image['cloudinary']['url'] }}" /></a>
+    <div id="abslink">link to this demotivator: <a href="http://funtastiq.ru/{{ image['cloudinary'].public_id }}">http://funtastiq.ru/{{ image['cloudinary'].public_id }}</a></div>
 {% else %}
     <a align="center" href="#"><img id="demotivator" data-picid="-1" src="http://cs7009.vk.me/c540100/v540100653/c500/2TL9XHB1f0U.jpg" /></a>
 {% endif %}
 
-<div id="abslink">link to this demotivator: <a href="http://funtastiq.ru/{{ image['cloudinary'].public_id }}">http://funtastiq.ru/{{ image['cloudinary'].public_id }}</a></div>
 
 <br> 
 </div>

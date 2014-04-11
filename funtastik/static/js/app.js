@@ -1,12 +1,34 @@
 $(document).ready(function() {
 
-
 var userid = $('#hlogin').data('userid') || 'anonymous';
 var likes = [];
 var hates = [];
 
 var loaded = [];
 var current = -1;
+
+function search(s) {
+    data = {};
+    $.ajax({
+        type: "GET",
+        url: "http://95.85.22.116:5000/search?query=" + s,
+        dataType: 'jsonp',
+        data: data,
+        success: function(r) {
+            console.log(r); 
+            loaded = r;
+            current = 0;
+            load_pic(loaded[current]);
+        }
+    });
+}
+
+
+if ($('#searchtext').val()) {
+    var s = $('#searchtext').val();
+    search(s);
+}
+
 
 var data = { 'user' : userid };
 $.ajax({
@@ -41,7 +63,20 @@ function load_pic(pic) {
     if (_.indexOf(hates, pic.public_id) > -1) {
         $('#hate').addClass('on');
     }
+/*
+    var url = window.location.href;
+    alert('was' + url);
+    url = url.replace(/\/([^\/]*)$/, '');
+    alert(url);
+    // todo: not very cool to hardcode url. need to refactor(something with data attributes)
+    //if(url.match(/\/([^\/]*)$/)[1] != 'login') {
+        //url = url.replace(/\/([^\/]*)$/, '');
+    //}
 
+    //url += pic.public_id;
+    alert(pic.public_id);
+    history.pushState({}, window.location.title, url + pic.public_id);
+*/
 }
 
 function next_demotivator(incr) {
@@ -90,6 +125,46 @@ Mousetrap.bind('a', function() { next_demotivator(-1); });
 $('#demotivator').click(function(event) {
     event.preventDefault();
     next_demotivator(1);
+});
+
+//http://95.85.22.116:5000/search?query=сегодня
+
+$('#search').click(function() {
+/*
+    $('a').removeClass('on');
+    $('a').removeClass('off');
+
+    current = current + incr;
+    if (current < 0) {
+        current = 0;
+    }
+
+    if ((current == loaded.length) || (loaded.length - current == 3)) {
+
+        data = {};
+        $.ajax({
+            type: "GET",
+            url: "/api/next",
+            data: data,
+            success: function(r) {
+                if (r.data) {
+                    loaded.push.apply(loaded, r.data);
+                    $.each(r.data,function(){(new Image).src=this['cloudinary'].url});        
+                    //console.log(loaded);
+                    var pic = loaded[current];
+                
+                    load_pic(pic);
+                 } else {
+                    alert('not ok');
+                }
+            }
+        });
+
+    } else {
+        load_pic(loaded[current]);
+    }
+*/
+
 });
 
 
@@ -195,6 +270,8 @@ $('#next').click(function(event) {
     });
 });
 
+
+/*
 $('#favorites').click(function() {
 
     event.preventDefault();
@@ -211,8 +288,7 @@ $('#favorites').click(function() {
         }
     });
 });
-
-
+*/
    
 });
 
