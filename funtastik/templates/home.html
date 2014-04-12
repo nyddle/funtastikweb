@@ -24,7 +24,21 @@
 <body>
 <!-- <script src="http://vk.com/js/api/openapi.js" type="text/javascript"></script> --!>
 
-
+<script>
+    $(function() {
+    $('.search .icon').click(
+        function(){
+            $(this).parent().addClass("open");
+            $(document).click( function(event){
+                if( $(event.target).closest(".search").length ) 
+                return;
+                $(".search").removeClass("open");
+                event.stopPropagation();
+            });
+        }
+    );
+});
+</script>
 
 <script type="text/javascript">(function() {
   if (window.pluso)if (typeof window.pluso.start == "function") return;
@@ -61,25 +75,39 @@
 <br><br>
 -->
 
-{% if search %}
-<input id="searchtext" type="text" value="{{ search }}"></input>
-{% else %}
-<input id="searchtext" type="text" >wefwef</input>
-{% endif %}
+<ul class="icons_panel">
+    <li>
+        <span id="upvotes">0</span>
+        <a id="like" href="#"></a>
+    </li>
+    <li>
+        <span id="downvotes">0</span>
+        <a id="hate" href="#"></a>
+    </li>
+    <li>
+        {% if image %}
+        <a id="share" href="http://vkontakte.ru/share.php?url=http://funtastiq.ru/{{ image['cloudinary'].public_id }}" target="_blank" class="icon">&nbsp</a>
+        {% else %}
+        <a id="share" href="http://vkontakte.ru/share.php?url=http://funtastiq.ru/" target="_blank" class="icon">&nbsp</a>
+        {% endif %}
+    </li>
+    <li>
+        <div class="search">
+            <i id="search" class="icon">&nbsp;</i>
+            <p>
+                {% if search %}
+                <input id="searchtext" type="text" value="{{ search }}"></input>
+                {% else %}
+                <input id="searchtext" type="text" value="" placeholder="сиськи"></input>
+                {% endif %}
 
+                <input type="submit" value="" id="s">
+            </p>
+        </div>
 
-<span id="upvotes"></span>
-<a id="like" href="#" class="icon">&nbsp</a>
-<span id="downvotes"></span>
-<a id="hate" href="#" class="icon">&nbsp</a>
-&nbsp;&nbsp;
-{% if image %}
-<a id="share" href="http://vkontakte.ru/share.php?url=http://funtastiq.ru/{{ image['cloudinary'].public_id }}" target="_blank" class="icon">&nbsp</a>
-{% else %}
-<a id="share" href="http://vkontakte.ru/share.php?url=http://funtastiq.ru/" target="_blank" class="icon">&nbsp</a>
-{% endif %}
-<a id="search" href="#" class="icon">&nbsp</a>
-<br>
+    </li>
+</ul>
+
 <br>
 
 {% if image %}

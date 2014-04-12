@@ -29,6 +29,12 @@ if ($('#searchtext').val()) {
     search(s);
 }
 
+$('#s').click(function()  {
+    var s = $('#searchtext').val();
+    search(s);
+});
+
+
 
 var data = { 'user' : userid };
 $.ajax({
@@ -52,8 +58,8 @@ function load_pic(pic) {
     pic = pic['cloudinary'];
     $('#demotivator').attr('src', pic.url);
     $('#demotivator').data('picid', pic.public_id);
-    $('#upvotes').html(pic.fun_like || '');
-    $('#downvotes').html(pic.fun_hate || '');
+    $('#upvotes').html(pic.fun_like || '0');
+    $('#downvotes').html(pic.fun_hate || '0');
     $('#abslink').html('link to this demotivator: <a href="http://funtastiq.ru/' + pic.public_id + '">http://funtastiq.ru/' + pic.public_id + '</a>' );
     $('#share').attr('href', 'http://vkontakte.ru/share.php?url=http://funtastiq.ru/' + pic.public_id);
 
