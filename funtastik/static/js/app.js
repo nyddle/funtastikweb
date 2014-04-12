@@ -15,6 +15,9 @@ function search(s) {
         dataType: 'jsonp',
         data: data,
         success: function(r) {
+            if (r.length == 0) {
+                alert('Ничего не найдено (');
+            }
             console.log(r); 
             loaded = r;
             current = 0;
@@ -31,6 +34,9 @@ if ($('#searchtext').val()) {
 
 $('#s').click(function()  {
     var s = $('#searchtext').val();
+    if (!s) {
+        alert('Введите запрос!!');
+    }
     search(s);
 });
 
@@ -43,7 +49,7 @@ $.ajax({
     data: data,
     success: function(r) {
         if (r) {
-            console.log(JSON.parse(r));
+            //console.log(JSON.parse(r));
             var user = JSON.parse(r);
             likes = user['like'];
             hate = user['hate'];
