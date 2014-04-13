@@ -32,6 +32,17 @@ if ($('#searchtext').val()) {
     search(s);
 }
 
+$('#searchtext').keydown(function(event) {
+    if (event.keyCode == 13) {
+        var s = $('#searchtext').val();
+        if (!s) {
+            alert('Введите запрос!!');
+        }
+        search(s);
+     }
+});
+
+
 $('#s').click(function()  {
     var s = $('#searchtext').val();
     if (!s) {
