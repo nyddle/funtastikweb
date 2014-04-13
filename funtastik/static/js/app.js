@@ -86,20 +86,9 @@ function load_pic(pic) {
     if (_.indexOf(hates, pic.public_id) > -1) {
         $('#hate').addClass('on');
     }
-/*
-    var url = window.location.href;
-    alert('was' + url);
-    url = url.replace(/\/([^\/]*)$/, '');
-    alert(url);
-    // todo: not very cool to hardcode url. need to refactor(something with data attributes)
-    //if(url.match(/\/([^\/]*)$/)[1] != 'login') {
-        //url = url.replace(/\/([^\/]*)$/, '');
-    //}
 
-    //url += pic.public_id;
-    alert(pic.public_id);
-    history.pushState({}, window.location.title, url + pic.public_id);
-*/
+    var url = pic.public_id;
+    history.pushState({}, window.location.title, url);
 }
 
 function next_demotivator(incr) {
