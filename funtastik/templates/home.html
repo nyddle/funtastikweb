@@ -53,16 +53,7 @@
 <!-- <div align="center" class="pluso" data-background="transparent" data-options="big,round,line,horizontal,counter,theme=06" data-services="vkontakte,odnoklassniki,moimir" data-user="474440128"></div> --!>
 
 
-{% if session.username %}
-    <a id="hlogin" data-userid={{ session['user_id'] }} href="/login/vkontakte">{{ session['username'] }}</a>
-    <a href="/logout">(logout)</a>
-{% else %}
-    <a id="hlogin" href="/login/vkontakte">login via vk</a>
-{% endif %}
 
-
-<br>
-<br>
 <div id="main" align="center">
 
 <!--
@@ -74,6 +65,14 @@
 
 <br><br>
 -->
+{% if session.username %}
+    <a id="hlogin" data-userid={{ session['user_id'] }} href="/login/vkontakte">{{ session['username'] }}</a>
+    <a href="/logout">(logout)</a>
+{% else %}
+    <a id="hlogin" href="/login/vkontakte">Войти через Вконтакте</a>
+{% endif %}
+<br>
+<br>
 
 <ul class="icons_panel">
     <li>
