@@ -77,6 +77,7 @@ h4 {
   height: 40px;
   display: block;
   text-decoration: none;
+  background: url(../images/sprite.png) 0 0 no-repeat;
 }
 .icons_panel li span{
   position: absolute;
@@ -154,45 +155,47 @@ h4 {
     cursor: pointer;
 }
 
-
-#like {
-    background: url(../images/up.png) top left no-repeat; 
-}
-#like:hover {
-    background: url(../images/up-active.png) top left no-repeat; 
-}
-#like.on {
-    background: url(../images/up-active.png) top left no-repeat; 
+#like:hover, #like.on {
+    background-position: 0 -50px; 
 }
 #hate {
-    background: url(../images/down.png) top left no-repeat; 
+    background-position: -50px 0px; 
 }
-#hate:hover {
-    background: url(../images/down-active.png) top left no-repeat; 
-}
-#hate.on {
-    background: url(../images/down-active.png) top left no-repeat; 
+#hate:hover, #hate.on  {
+    background-position: -50px -50px; 
 }
 #share {
-    background: url(../images/share.png) top left no-repeat; 
+    background-position: -100px 0px; 
 }
-#share:hover {
-    background: url(../images/share-active.png) top left no-repeat; 
-}
-#share.on {
-    background: url(../images/share-active.png) top left no-repeat; 
+#share:hover, #share.on {
+    background-position: -100px -50px; 
 }
 #search {
-    background: url(../images/search.png) top left no-repeat; 
+    background-position: -150px 0px; 
 }
-#search:hover, .open #search{
-    background: url(../images/search-active.png) top left no-repeat; 
+#search:hover, .open #search, #search.on {
+    background-position: -150px -50px;  
 }
-#search.on {
-    background: url(../images/search-active.png) top left no-repeat; 
+.container {
+    position: relative;
+    margin: 20px auto;
+    max-width: 1200px;
+}
+
+.loading {
+    position: absolute;
+    display: inline-block;
+    background: #555 url('../images/loader.gif') center center no-repeat;
+    opacity: 0.7;
+    height: 100%;
+}
+.image {
+    max-width: 1200px;
 }
 
 a:link {color:#FF0000;}      /* unvisited link */
 a:visited {color:#00FF00;}  /* visited link */
 a:hover {color:#FF00FF;}  /* mouse over link */
 a:active {color:#0000FF;}  /* selected link */
+
+

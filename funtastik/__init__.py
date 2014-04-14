@@ -30,6 +30,9 @@ import cloudinary.api
 from cloudinary.uploader import upload
 from cloudinary.utils import cloudinary_url
 
+from keen.client import KeenClient
+
+
 import redis
 
 from cloudinary import uploader #pip install git+https://github.com/cloudinary/pycloudinary/
